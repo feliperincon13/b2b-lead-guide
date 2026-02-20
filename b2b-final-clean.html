@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>B2B Lead Machine - Process Guide</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -502,7 +500,8 @@
         }
         
         .tech-details.open {
-            max-height: 1500px;
+            max-height: 3000px;
+            overflow-y: auto;
         }
         
         .tech-content {
@@ -510,6 +509,8 @@
             background: #f9fafb;
             border-radius: 10px;
             margin-top: 1.2rem;
+            max-height: 2500px;
+            overflow-y: auto;
         }
         
         .tech-content h4 {
@@ -841,7 +842,7 @@
                                 <div class="step-number" style="background: #9333ea; color: white;">14</div>
                                 <div class="step-icon">📋</div>
                                 <div class="step-content">
-                                    <div class="step-title">CRM Check+ (Review & Assignment)</div>
+                                    <div class="step-title">CRM Check+ (Review &amp; Assignment)</div>
                                     <div class="step-desc">Strategic Hunter assignment via Google Sheets review</div>
                                 </div>
                             </div>
@@ -947,11 +948,11 @@
                     'Creates one record per CSV row'
                 ],
                 actions: [
-                    '1. Go to [Staging] Company Leads table',
-                    '2. Use Airtable CSV import feature',
-                    '3. <strong>Verify field mapping carefully:</strong>',
+                    'Go to [Staging] Company Leads table',
+                    'Use Airtable CSV import feature',
+                    '<strong>Verify field mapping carefully:</strong>',
                     '   <ul><li><strong>Company Name</strong> (MANDATORY)</li><li>Website, Email, Address, etc. (optional but helpful)</li></ul>',
-                    '4. Complete import',
+                    'Complete import',
                     '',
                     '<p class="section-header">ASSIGN SOURCE (immediately after import):</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Source = Fair, event, or list where lead originated</li><li style="padding-left: 1.5rem;">• Must be specific: "Expo Real 2025" NOT "Expo Real"</li><li style="padding-left: 1.5rem;">• Add source option in Source field (single select)</li><li style="padding-left: 1.5rem;">• ALSO add in Company Enrichment Pipeline table</li><li style="padding-left: 1.5rem;">• Select all imported records and assign in bulk</li></ul>'
@@ -976,13 +977,13 @@
                     'Marks duplicates for review'
                 ],
                 actions: [
-                    '1. After import and source assignment, run deduplication script',
+                    'After import and source assignment, run deduplication script',
                     '',
                     '<p class="section-header">Review flagged duplicates:</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Check <strong>Master Score</strong> (higher = more complete)</li><li style="padding-left: 1.5rem;">• <strong>Master?</strong> checkbox shows system suggestion</li><li style="padding-left: 1.5rem;">• Review carefully - may not always be most accurate choice</li><li style="padding-left: 1.5rem;">• <strong>YOU decide:</strong> Choose record with cleanest name AND most complete information</li></ul>',
                     '',
-                    '2. Mark chosen master, mark others as <strong>"Archived (duplicate)"</strong>',
-                    '3. Proceed to domain check'
+                    'Mark chosen master, mark others as <strong>"Archived (duplicate)"</strong>',
+                    'Proceed to domain check'
                 ],
                 criteria: [
                     {icon: '✅', text: 'Quick check - only by name within current upload'},
@@ -1015,27 +1016,36 @@
                 title: 'STEP 3: Enrich Company Domain',
                 summary: 'Extract domain from Website/Email with script, then use Clay AI if needed',
                 system: [
-                    '<div style="background: linear-gradient(135deg, #fee2e2, #fecaca); border-left: 5px solid #ef4444; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; font-weight: 600;">⚠️ <strong>DOCUMENTATION IN PROGRESS:</strong> Clay domain enrichment steps are being finalized. Check back soon for complete workflow.</div>',
                     '<strong>STEP 1:</strong> Script extraction from Website/Email fields',
                     'Attempts to extract domain from available data in staging',
                     '<strong>STEP 2 (if needed):</strong> Clay Domain Enrichment',
-                    'Clay finds company domains through AI-powered web search',
+                    'Clay finds company domains through AI-powered web search using Apify',
                     '<strong>Why Clay is often needed:</strong> Companies rarely have email but not website in CSV'
                 ],
                 actions: [
-                    '<p class="section-header">Run Script First:</p>',
+                    '<p class="section-header">Run Script First</p>',
                     '<ol style="margin-top: 0.5rem;"><li>Run script: <strong>[Staging] Company Domain (key) from Website/Email - Simplified Auto</strong></li><li>Script extracts domain from Website or Email fields</li><li>Check results: Filter where <strong>Company Domain (key) is empty</strong></li></ol>',
                     '',
-                    '<p class="section-header">If still empty - Clay Domain Enrichment:</p>',
-                    '<ol style="margin-top: 0.5rem;"><li>After script, go to <strong>"Company Domain Enrichment"</strong> view</li><li>Confirm the badge for companies you\'re currently working on is correct</li><li>Navigate to Clay → Domain Enrichment Folder → Domain Enrichment</li><li>Create new table (duplicate existing one, e.g., "E-World 2026")</li><li>In the "Enrich your data" field, import Airtable view: <strong>"Company Domain Enrichment"</strong></li><li><strong>[DOCUMENTATION IN PROGRESS - More steps to be added]</strong></li></ol>'
+                    '<p class="section-header">If still empty - Clay Domain Enrichment</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>After script, go to <strong>"Company Domain Enrichment"</strong> view</li><li>Confirm the badge for companies you\'re currently working on is correct</li><li>Navigate to Clay → Domain Enrichment Folder → Domain Enrichment</li><li>Create new table (duplicate existing one, e.g., "E-World 2026")</li><li>In the "Enrich your data" field, import Airtable view: <strong>"Company Domain Enrichment"</strong></li></ol>',
+                    '',
+                    '<p class="section-header">Run Clay Enrichment Fields (in order)</p>',
+                    '<ol style="margin-top: 0.5rem;"><li><strong>identifyDomain</strong> (Apify Google Search Results Scraper)<br>Searches for company domain candidates</li><li><strong>confirmDomain</strong> (GPT-4o-mini, Use AI)<br>AI validates the most likely correct domain</li><li><strong>scrapeCandidate_1</strong><br>Scrapes first domain candidate</li><li><strong>scrapeCandidate_2</strong><br>Scrapes second domain candidate</li><li><strong>scrapeCandidate_3</strong><br>Scrapes third domain candidate</li><li><strong>resolveDomain</strong><br>Final resolution to select correct domain</li></ol>',
+                    '',
+                    '<p class="section-header">Export Results to Airtable</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Once enrichment is complete, check the <strong>"unifiedDomain"</strong> field<br>This contains the final resolved domain for each company</li><li>Click "Update Record" to export back to Airtable</li><li>Enriched domains will appear in <strong>Company Domain (key)</strong> field in Staging</li><li>Verify domains populated correctly</li></ol>'
                 ],
                 criteria: [
                     {icon: '✅', text: 'Always run script FIRST - quick and free'},
                     {icon: '✅', text: 'Clay enrichment needed when script finds nothing'},
-                    {icon: '💡', text: 'Script works well - just rare to have email without website'}
+                    {icon: '⚠️', text: 'Run Clay fields in order - each depends on previous'},
+                    {icon: '💡', text: 'unifiedDomain field shows final result before export'}
                 ],
-                tips: 'Run the script first. It\'s quick and works when Website or Email data exists. Clay is your backup for companies missing both.',
-                tech: null
+                tips: 'Run the script first. It\'s quick and works when Website or Email data exists. Clay is your backup for companies missing both. The Clay workflow uses multiple AI steps to ensure domain accuracy.',
+                tech: {
+                    script: 'Script: "[Staging] Company Domain (key) from Website/Email - Simplified Auto" + Clay Apify Integration',
+                    notes: 'Script extracts from Website URL or Email domain. Clay workflow: Apify searches → AI confirms → Multiple scrapes → Final resolution. Output: unifiedDomain → Company Domain (key) in Airtable.'
+                }
             },
             
             // DECISION - Short format
@@ -1104,14 +1114,14 @@
                     'Master selection: Highest completeness score → Earliest created → Lowest ID'
                 ],
                 actions: [
-                    '1. Run <strong>"Deduplicate Companies"</strong> script',
-                    '2. Review duplicate groups (Group by <strong>Dedup Key</strong>)',
+                    'Run <strong>"Deduplicate Companies"</strong> script',
+                    'Review duplicate groups (Group by <strong>Dedup Key</strong>)',
                     '',
                     '<p class="section-header">Verify suggested Master:</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Check <strong>Master? = checked</strong></li><li style="padding-left: 1.5rem;">• Check completeness - may not always be most accurate</li><li style="padding-left: 1.5rem;">• YOU choose: Cleanest name + most complete info</li></ul>',
                     '',
-                    '3. Copy any unique data from duplicates to Master',
-                    '4. Mark duplicates as <strong>"Archived (duplicate)"</strong>'
+                    'Copy any unique data from duplicates to Master',
+                    'Mark duplicates as <strong>"Archived (duplicate)"</strong>'
                 ],
                 criteria: [
                     {icon: '✅', text: 'Domain matching is highest priority - most reliable'},
@@ -1137,13 +1147,13 @@
                     'Marks staging records as <strong>"Pushed to Pipeline"</strong> after successful transfer'
                 ],
                 actions: [
-                    '1. Ensure deduplication is complete (only Masters remain)',
-                    '2. Go to <strong>"Ready Data View"</strong>',
-                    '3. Click <strong>"Push Companies"</strong> button',
-                    '4. Review preview: How many will be CREATED vs UPDATED',
-                    '5. Click <strong>"Accept"</strong>',
-                    '6. Verify in Company Enrichment Pipeline that records appeared',
-                    '7. Check staging: <strong>Staging Status = "Pushed to Pipeline"</strong>'
+                    'Ensure deduplication is complete (only Masters remain)',
+                    'Go to <strong>"Ready Data View"</strong>',
+                    'Click <strong>"Push Companies"</strong> button',
+                    'Review preview: How many will be CREATED vs UPDATED',
+                    'Click <strong>"Accept"</strong>',
+                    'Verify in Company Enrichment Pipeline that records appeared',
+                    'Check staging: <strong>Staging Status = "Pushed to Pipeline"</strong>'
                 ],
                 criteria: [
                     {icon: '✅', text: 'Only Master records are pushed (duplicates stay in staging)'},
@@ -1170,7 +1180,7 @@
                 ],
                 actions: [
                     '<p class="section-header">Prepare CSV for Check:</p>',
-                    '<ol style="margin-top: 0.5rem;"><li>Create CSV with required format:</li></ol>',
+                    '<ol style="margin-top: 0.5rem;"><li>Create CSV with required format</li></ol>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• <strong>company_name</strong> (MANDATORY)</li><li style="padding-left: 1.5rem;">• <strong>contact_name</strong> (can be empty, but column needed)</li><li style="padding-left: 1.5rem;">• <strong>website_domain</strong> (MANDATORY)</li><li style="padding-left: 1.5rem;">• <strong>email</strong> (can be empty, but column needed)</li></ul>',
                     '',
                     '<p class="section-header">Run Metabase Check:</p>',
@@ -1230,9 +1240,9 @@
                     '<p class="section-header">7. Export to Airtable:</p>',
                     '<ol style="margin-top: 0.5rem;"><li>Click: <strong>Insert new column → Add enrichment → "update record airtable" → Choose Update Record</strong></li><li><strong>CRITICAL:</strong> Map to Clay columns ONLY! (e.g., "(Clay) Company Name", "(Clay) Domain", etc.)</li><li>Do NOT map to main columns - this preserves your existing verified data</li><li>Run <strong>"Update Record"</strong></li></ol>',
                     '',
-                    '8. Review enriched data in Company Enrichment Pipeline',
-                    '9. Verify accuracy of AI-generated information',
-                    '10. Set <strong>Company Approved? = "Yes"</strong> for validated companies'
+                    'Review enriched data in Company Enrichment Pipeline',
+                    'Verify accuracy of AI-generated information',
+                    'Set <strong>Company Approved? = "Yes"</strong> for validated companies'
                 ],
                 criteria: [
                     {icon: '✅', text: 'ALWAYS use conditional run - prevents accidental re-enrichment'},
@@ -1282,13 +1292,13 @@
                     '<strong>Source assignment is CRITICAL</strong> for traceability - same as company import'
                 ],
                 actions: [
-                    '1. Go to [Staging] Employee Leads table',
-                    '2. Use Airtable CSV import',
+                    'Go to [Staging] Employee Leads table',
+                    'Use Airtable CSV import',
                     '',
                     '<p class="section-header">Field mapping:</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Name, Email, Position (recommended)</li><li style="padding-left: 1.5rem;">• Company Name (critical for linking)</li><li style="padding-left: 1.5rem;">• LinkedIn URL (helps with deduplication)</li><li style="padding-left: 1.5rem;">• Role at Event, Phone Number (optional but useful)</li></ul>',
                     '',
-                    '3. Complete import',
+                    'Complete import',
                     '',
                     '<p class="section-header">ASSIGN SOURCE (immediately after import):</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Source = Fair, event, or list where lead originated</li><li style="padding-left: 1.5rem;">• Must be specific: "Expo Real 2025" NOT "Expo Real"</li><li style="padding-left: 1.5rem;">• Add source option in Source field (single select)</li><li style="padding-left: 1.5rem;">• Select all imported records and assign in bulk</li><li style="padding-left: 1.5rem;">• <strong>CRITICAL:</strong> Same as company import - ensures traceability</li></ul>'
@@ -1365,10 +1375,10 @@
                     'Triggered when Clean Domain is empty after linking attempt'
                 ],
                 actions: [
-                    '1. Filter: <strong>Clean Domain is empty</strong>',
-                    '2. For each employee:',
+                    'Filter: <strong>Clean Domain is empty</strong>',
+                    'For each employee:',
                     '   <ul><li>Check LinkedIn - can you identify their company?</li><li>If company found: Add to Staging Companies → Re-link</li><li>If no company OR irrelevant: Mark "Archived (no company)"</li></ul>',
-                    '3. Move archived employees to separate view'
+                    'Move archived employees to separate view'
                 ],
                 criteria: [
                     {icon: '❌', text: 'If no company identified → Archive'},
@@ -1392,13 +1402,13 @@
                     'Master selection: Highest completeness score → Earliest created → Lowest ID'
                 ],
                 actions: [
-                    '1. Run <strong>"Deduplicate Employees"</strong> script',
-                    '2. Review duplicate groups (Group by <strong>Dedup Key</strong>)',
+                    'Run <strong>"Deduplicate Employees"</strong> script',
+                    'Review duplicate groups (Group by <strong>Dedup Key</strong>)',
                     '',
                     '<p class="section-header">Verify Master selection:</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Check Master Score (completeness)</li><li style="padding-left: 1.5rem;">• May not always be most accurate - review carefully</li><li style="padding-left: 1.5rem;">• YOU decide: Most complete contact info</li></ul>',
                     '',
-                    '3. Mark duplicates as <strong>"Archived (duplicate)"</strong>'
+                    'Mark duplicates as <strong>"Archived (duplicate)"</strong>'
                 ],
                 criteria: [
                     {icon: '✅', text: 'Domain + Name matching is now most reliable (wasn\'t available in first dedup)'},
@@ -1426,13 +1436,13 @@
                     'Marks staging records as <strong>"Pushed to Pipeline"</strong> after successful transfer'
                 ],
                 actions: [
-                    '1. Ensure deduplication is complete (only Masters remain)',
-                    '2. Go to view showing records ready to push',
-                    '3. Run <strong>"Push Employees to LEP"</strong> script',
-                    '4. Review preview: How many will be CREATED vs UPDATED',
-                    '5. Click <strong>"Accept"</strong>',
-                    '6. Verify in Lead Enrichment Pipeline that records appeared',
-                    '7. Check staging: <strong>Staging Status = "Pushed to Pipeline"</strong>'
+                    'Ensure deduplication is complete (only Masters remain)',
+                    'Go to view showing records ready to push',
+                    'Run <strong>"Push Employees to LEP"</strong> script',
+                    'Review preview: How many will be CREATED vs UPDATED',
+                    'Click <strong>"Accept"</strong>',
+                    'Verify in Lead Enrichment Pipeline that records appeared',
+                    'Check staging: <strong>Staging Status = "Pushed to Pipeline"</strong>'
                 ],
                 criteria: [
                     {icon: '✅', text: 'Source field accumulates across events - all sources preserved'},
@@ -1460,16 +1470,16 @@
                     '<strong>• UNDEFINED:</strong> No match with keywords BUT position exists → Requires manual review'
                 ],
                 actions: [
-                    '1. Navigate to Lead Enrichment Pipeline',
-                    '2. Run <strong>"Keyword Role Check"</strong> script',
-                    '3. Review <strong>Keyword Role Check</strong> field results',
-                    '4. Based on result, follow appropriate workflow:',
+                    'Navigate to Lead Enrichment Pipeline',
+                    'Run <strong>"Keyword Role Check"</strong> script',
+                    'Review <strong>Keyword Role Check</strong> field results',
+                    'Based on result, follow appropriate workflow:',
                     '',
                     '<p class="section-header">WORKFLOW A: UNDEFINED</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Manual review required</li><li style="padding-left: 1.5rem;">• Check position on LinkedIn</li><li style="padding-left: 1.5rem;">• Decide: Is this a decision-maker?</li><li style="padding-left: 1.5rem;">• Update Lead Final Status accordingly</li></ul>',
                     '',
                     '<p class="section-header">WORKFLOW B: NEEDS ENRICHMENT</p>',
-                    '<ol style="margin-top: 0.5rem;"><li>Verify <strong>Company Approved? = Yes</strong></li><li>If approved, run AI field:<br><strong>"Strong Role Enrichment + Target Person Check (5 credits)"</strong></li><li>AI researches position and determines if C-Level</li><li>Output auto-splits into 2 fields:</li></ol>',
+                    '<ol style="margin-top: 0.5rem;"><li>Verify <strong>Company Approved? = Yes</strong></li><li>If approved, run AI field:<br><strong>"Strong Role Enrichment + Target Person Check (5 credits)"</strong></li><li>AI researches position and determines if C-Level</li><li>Output auto-splits into 2 fields</li></ol>',
                     '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">- Enriched Role</li><li style="padding-left: 1.5rem;">- Target Person Check Enriched</li></ul>',
                     '<ol start="5" style="margin-top: 0.5rem;"><li>Lead auto-moves to appropriate view</li></ol>',
                     '',
@@ -1479,7 +1489,7 @@
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• If AI result = <strong>Role validated (manual check)</strong>:</li></ul>',
                     '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">- Needs final manual approval</li><li style="padding-left: 1.5rem;">- Could be validated OR no relevant</li><li style="padding-left: 1.5rem;">- Update Lead Final Status accordingly</li></ul>',
                     '',
-                    '5. Set <strong>Lead Final Status = "🟢 Validated"</strong> for confirmed decision-makers',
+                    'Set <strong>Lead Final Status = "🟢 Validated"</strong> for confirmed decision-makers',
                     '',
                     '<p class="section-header">📊 SPECIALIZED VIEWS:</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;"><strong>View: "(event) Role validated (manual check)"</strong></li></ul>',
@@ -1539,11 +1549,11 @@
                     '<strong>Safety:</strong> Only creates links if Link to CEP field is empty (won\'t overwrite existing links)'
                 ],
                 actions: [
-                    '1. Ensure Company Enrichment Pipeline has companies with domains',
-                    '2. Run <strong>"Employee - Matching Company Script"</strong>',
-                    '3. Review stats shown by script:',
+                    'Ensure Company Enrichment Pipeline has companies with domains',
+                    'Run <strong>"Employee - Matching Company Script"</strong>',
+                    'Review stats shown by script:',
                     '   <ul><li>Links created</li><li>Employees already linked (skipped)</li><li>Domains not found in CEP</li></ul>',
-                    '4. Verify employees have <strong>Link to CEP</strong> populated',
+                    'Verify employees have <strong>Link to CEP</strong> populated',
                     '',
                     '<p class="section-header">For employees without match:</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Check if their company exists in CEP</li><li style="padding-left: 1.5rem;">• If missing, add company to Staging Companies</li><li style="padding-left: 1.5rem;">• Run full company flow first</li><li style="padding-left: 1.5rem;">• Then re-run this matching script</li></ul>'
@@ -1566,7 +1576,6 @@
                 title: 'STEP 14: CRM Check+ (Review & Assignment)',
                 summary: 'Strategic review process: Determine which companies can be contacted and assign to Hunters via Google Sheets',
                 system: [
-                    '<div style="background: linear-gradient(135deg, #f3e8ff, #e9d5ff); border-left: 5px solid #9333ea; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; font-weight: 600; color: #581c87;">⚠️ <strong>CRITICAL PRE-OUTPUT STEP:</strong><br>This step is NOT part of Employee Flow. This is a strategic review that happens ONCE per event before generating ANY notes. Do not proceed to note generation until this review is complete.</div>',
                     '<strong>Purpose:</strong> Determines which companies can be contacted for this specific event',
                     '<strong>Separates:</strong> New Leads vs Existing Organizations',
                     '<strong>Hunter assignment:</strong> Strategic distribution via Google Sheets collaborative review',
@@ -1575,21 +1584,21 @@
                 ],
                 actions: [
                     '<p class="section-header">PART 1: Create Views in CEP</p>',
-                    '<ol style="margin-top: 0.5rem;"><li>In Company Enrichment Pipeline, create 2 views:</li></ol>',
-                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• <strong>"(event) New Leads"</strong><br>Filter: lead_status = "New Lead"</li><li style="padding-left: 1.5rem;">• <strong>"(event) Existing Organizations"</strong><br>Filter: lead_status = "Existing Organization"</li></ul>',
+                    'In Company Enrichment Pipeline, create 2 views:',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• <strong>"(event) New Leads"</strong><br>Filter: lead_status = "New Lead" AND Company Approved? = "Yes"</li><li style="padding-left: 1.5rem;">• <strong>"(event) Existing Organizations"</strong><br>Filter: lead_status = "Existing Organization" AND Company Approved? = "Yes"</li></ul>',
                     '',
                     '<p class="section-header">PART 2: Export to Google Sheets</p>',
-                    '<ol style="margin-top: 0.5rem;"><li>Export or copy data from each CEP view</li><li>Paste into corresponding Google Sheet MASTER tab:</li></ol>',
+                    '<ol style="margin-top: 0.5rem;"><li>Export or copy data from each CEP view</li><li>Paste into corresponding Google Sheet MASTER tab</li></ol>',
                     '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• New Leads → <a href="https://docs.google.com/spreadsheets/d/14TZLr_lLQ3Dn1mSrinhbdKAkSuxu6z4T063XL9TKK74/edit?gid=0#gid=0" target="_blank">Deal Review & Assignment - New Leads</a></li><li style="padding-left: 1.5rem;">• Existing Organizations → <a href="https://docs.google.com/spreadsheets/d/1zhfYkQn9ObzWdrjrS2nVxRX3nT36NGqLd3Sw6AgcW5Q/edit?gid=0#gid=0" target="_blank">Deal Review & Assignment - Existing Leads</a></li></ul>',
                     '<ol start="3" style="margin-top: 0.5rem;"><li>Data goes to <strong>"MASTER"</strong> tab in each sheet</li></ol>',
                     '',
                     '<p class="section-header">PART 3: Run "Refresh Farmer tabs"</p>',
-                    '<ol style="margin-top: 0.5rem;"><li>In Google Sheets, click menu: <strong>🔄 Deal Review → "Refresh Farmer Tabs"</strong></li><li>Script automatically distributes leads to Hunter tabs:</li></ol>',
+                    '<ol style="margin-top: 0.5rem;"><li>In Google Sheets, click menu: <strong>🔄 Deal Review → "Refresh Farmer Tabs"</strong></li><li>Script automatically distributes leads to Hunter tabs</li></ol>',
                     '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• Max Richter</li><li style="padding-left: 1.5rem;">• Constantin Ruhe</li><li style="padding-left: 1.5rem;">• Matthias Strach</li><li style="padding-left: 1.5rem;">• Lina Adrian</li><li style="padding-left: 1.5rem;">• Dr. Friso Zimmermann</li><li style="padding-left: 1.5rem;">• Others (Flo reviews unassigned deals)</li></ul>',
                     '<ol start="3" style="margin-top: 0.5rem;"><li>Each Hunter gets their own tab with leads filtered to them</li></ol>',
                     '',
                     '<p class="section-header">PART 4: Notify Hunters</p>',
-                    '<ol style="margin-top: 0.5rem;"><li>Send notification message to each Hunter</li><li>They review their tab and fill columns:</li></ol>',
+                    '<ol style="margin-top: 0.5rem;"><li>Send notification message to each Hunter</li><li>They review their tab and fill columns</li></ol>',
                     '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;"><strong>For NEW LEADS:</strong></li></ul>',
                     '<ul style="list-style: none; padding-left: 0; margin-left: 3rem;"><li style="padding-left: 1.5rem;">• Column L: <strong>Review Status</strong><br>(Approved for Contact / Needs Review / Do Not Contact)</li><li style="padding-left: 1.5rem;">• Column M: <strong>Notes from Deal Owner</strong></li></ul>',
                     '<ul style="list-style: none; padding-left: 0; margin-left: 2rem; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;"><strong>For EXISTING LEADS:</strong></li></ul>',
@@ -1672,8 +1681,8 @@
                     '<strong>Update Note Logic:</strong> Immutable history - only appends NEW info, never duplicates Fair Blocks or employees'
                 ],
                 actions: [
-                    '1. Go to "Note to Pipedrive" table',
-                    '2. Run <strong>"Generate Note (Universal)"</strong> script',
+                    'Go to "Note to Pipedrive" table',
+                    'Run <strong>"Generate Note (Universal)"</strong> script',
                     '',
                     '<p class="section-header">Choose mode:</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Single fair → Mode 1 (By Source)</li><li style="padding-left: 1.5rem;">• Filtered view → Mode 2 (By View)</li><li style="padding-left: 1.5rem;">• Multiple fairs → Mode 3 (Multi-Source)</li></ul>',
@@ -1681,9 +1690,9 @@
                     '<p class="section-header">Configure filters:</p>',
                     '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Company Approved? (require "Yes" OR ignore)</li><li style="padding-left: 1.5rem;">• CRM+ Status Approved (multi-select filter)</li><li style="padding-left: 1.5rem;">• Lead Final Status (require "🟢 Validated" OR ignore)</li></ul>',
                     '',
-                    '3. Review preview of notes generated',
-                    '4. Click <strong>"Accept"</strong>',
-                    '5. Verify notes with formatted content'
+                    'Review preview of notes generated',
+                    'Click <strong>"Accept"</strong>',
+                    'Verify notes with formatted content'
                 ],
                 criteria: [
                     {icon: '✅', text: 'Only validated employees included (🟢 Validated)'},
@@ -1793,13 +1802,13 @@
                     '<strong>Workflow ends here:</strong> This is the final step - your work is complete'
                 ],
                 actions: [
-                    '1. After generating notes in Airtable, verify completeness:',
+                    'After generating notes in Airtable, verify completeness:',
                     '   <ul><li>All approved companies have notes</li><li>Notes contain all required sections (Fair Block, Employees, Company Info)</li><li>No formatting errors</li></ul>',
-                    '2. Prepare notification for Simon with:',
+                    'Prepare notification for Simon with:',
                     '   <ul><li><strong>Event name(s):</strong> Which fair/event these notes are for</li><li><strong>Number of notes:</strong> Total count created</li><li><strong>Location:</strong> Airtable table "Note to Pipedrive"</li><li><strong>View filter:</strong> If specific view, mention it</li></ul>',
-                    '3. Send notification to Simon',
-                    '4. Simon uploads notes to Pipedrive manually',
-                    '5. <strong>Done!</strong> Workflow complete - await confirmation from Simon'
+                    'Send notification to Simon',
+                    'Simon uploads notes to Pipedrive manually',
+                    '<strong>Done!</strong> Workflow complete - await confirmation from Simon'
                 ],
                 criteria: [
                     {icon: '✅', text: 'All notes verified and complete before notifying'},
@@ -1965,5 +1974,6 @@
             btn.querySelector('span:last-child').textContent = details.classList.contains('open') ? '▲' : '▼';
         }
     </script>
-</body>
-</html>
+
+
+</body></html>
