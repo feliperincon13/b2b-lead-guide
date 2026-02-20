@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2B Lead Machine - Process Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg: #f8fafc;
+            --card: white;
+            --yellow: #fbbf24;
+            --yellow-dark: #d97706;
+            --yellow-light: #fef3c7;
+            --blue: #3b82f6;
+            --blue-light: #dbeafe;
+            --green: #10b981;
+            --green-light: #d1fae5;
+            --purple: #8b5cf6;
+            --purple-light: #ede9fe;
+            --red: #ef4444;
+            --black: #1f2937;
+            --gray: #6b7280;
+            --gray-light: #e5e7eb;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--black);
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            height: 100vh;
+        }
+        
+        /* Main Panel */
+        .main-panel {
+            overflow-y: auto;
+            background: var(--bg);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Flow Container */
+        .flow-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        /* Track Section */
+        .track-section {
+            margin-bottom: 3rem;
+        }
+        
+        .track-header {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        
+        .track-header:hover {
+            transform: translateX(6px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .track-header.active {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        
+        .track-header.company {
+            background: var(--yellow);
+            color: var(--yellow-dark);
+        }
+        
+        .track-header.employee {
+            background: var(--blue);
+            color: white;
+        }
+        
+        .track-header.convergence {
+            background: var(--purple);
+            color: white;
+        }
+        
+        /* Steps */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        
+        /* Step Box */
+        .step {
+            background: white;
+            border: 3px solid;
+            border-radius: 14px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            position: relative;
+        }
+        
+        .step:hover {
+            transform: translateX(6px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        
+        .step.active {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            border-width: 4px;
+        }
+        
+        .step.company {
+            border-color: var(--yellow);
+            background: linear-gradient(90deg, white 0%, var(--yellow-light) 100%);
+        }
+        
+        .step.employee {
+            border-color: var(--blue);
+            background: linear-gradient(90deg, white 0%, var(--blue-light) 100%);
+        }
+        
+        .step.convergence {
+            border-color: var(--purple);
+            background: linear-gradient(90deg, white 0%, var(--purple-light) 100%);
+        }
+        
+        .step.integration {
+            border-style: dashed;
+            border-color: var(--green);
+            background: linear-gradient(90deg, white 0%, var(--green-light) 100%);
+        }
+        
+        .step-main {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        
+        .step-number {
+            width: 42px;
+            height: 42px;
+            background: var(--black);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        
+        .step-icon {
+            font-size: 2.2rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            line-height: 1.3;
+        }
+        
+        .step-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        
+        /* Decision Box */
+        .decision {
+            background: var(--black);
+            color: white;
+            border: 3px solid var(--black);
+            border-radius: 14px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .decision:hover {
+            transform: translateX(6px);
+            background: var(--red);
+            border-color: var(--red);
+        }
+        
+        .decision.active {
+            transform: translateX(10px) scale(1.02);
+            background: var(--red);
+            border-color: var(--red);
+        }
+        
+        .decision-main {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        
+        .decision-icon {
+            font-size: 2.5rem;
+        }
+        
+        .decision-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        /* Branches */
+        .branches {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.2rem;
+            margin-left: 1.5rem;
+            margin-top: 1.2rem;
+        }
+        
+        .branch-label {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            align-self: start;
+            margin-top: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .branch-label.yes {
+            background: var(--green);
+            color: white;
+        }
+        
+        .branch-label.no {
+            background: var(--red);
+            color: white;
+        }
+        
+        /* Merge Section */
+        .merge {
+            background: linear-gradient(135deg, var(--purple), #6b21a8);
+            color: white;
+            padding: 2rem;
+            border-radius: 14px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.4rem;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
+            margin: 3rem 0;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 0;
+            background: white;
+            border-left: 1px solid var(--gray-light);
+            overflow: hidden;
+            transition: width 0.3s ease;
+            box-shadow: -8px 0 24px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 100;
+        }
+        
+        .sidebar.open {
+            width: 600px;
+        }
+        
+        .sidebar-inner {
+            width: 600px;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+        }
+        
+        .sidebar-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 36px;
+            height: 36px;
+            background: var(--gray-light);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        
+        .sidebar-close:hover {
+            background: var(--red);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        /* Guide Content */
+        .guide-header {
+            background: linear-gradient(135deg, var(--purple), #6b21a8);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 14px;
+            margin-bottom: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .guide-header h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+        
+        .guide-header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+        
+        .guide-section {
+            margin-bottom: 2rem;
+        }
+        
+        .guide-section-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--purple);
+        }
+        
+        .guide-box {
+            background: var(--bg);
+            padding: 1.8rem;
+            border-radius: 12px;
+            border-left: 5px solid var(--purple);
+        }
+        
+        /* Clean list styling - NO arrows */
+        .guide-box ol {
+            list-style: none;
+            counter-reset: item;
+            padding: 0;
+        }
+        
+        .guide-box ol > li {
+            counter-increment: item;
+            padding: 0.7rem 0;
+            padding-left: 2.5rem;
+            position: relative;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        .guide-box ol > li::before {
+            content: counter(item) ".";
+            position: absolute;
+            left: 0;
+            color: var(--purple);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+        
+        .guide-box ul {
+            list-style: none;
+            padding: 0;
+            margin-left: 2.5rem;
+        }
+        
+        .guide-box ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        .guide-box ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--purple);
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+        
+        .guide-box li strong {
+            color: var(--black);
+        }
+        
+        /* Section headers inside guide-box */
+        .guide-box .section-header {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--black);
+            margin: 1.2rem 0 0.8rem 0;
+            padding-left: 0;
+        }
+        
+        .guide-box .section-header:first-child {
+            margin-top: 0;
+        }
+        
+        .tip-box {
+            background: linear-gradient(135deg, var(--yellow-light), #fde68a);
+            border-left: 5px solid var(--yellow);
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--yellow-dark);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+        
+        .tech-toggle {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px dashed var(--gray-light);
+        }
+        
+        .tech-btn {
+            background: var(--bg);
+            border: 2px solid var(--gray-light);
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .tech-btn:hover {
+            background: var(--purple);
+            color: white;
+            border-color: var(--purple);
+        }
+        
+        .tech-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .tech-details.open {
+            max-height: 3000px;
+            overflow-y: auto;
+        }
+        
+        .tech-content {
+            padding: 1.8rem;
+            background: #f9fafb;
+            border-radius: 10px;
+            margin-top: 1.2rem;
+            max-height: 2500px;
+            overflow-y: auto;
+        }
+        
+        .tech-content h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+        
+        .code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        
+        /* Help Tooltip */
+        .help-tooltip {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            z-index: 90;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+        
+        .help-tooltip.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Main Panel -->
+        <div class="main-panel">
+            <div class="header">
+                <h1>🎯 B2B Lead Machine</h1>
+                <p class="subtitle">Automated AI-powered lead enrichment system: Transform raw CSV data from trade fairs and events into CRM-ready, qualified notes</p>
+            </div>
+            
+            <div class="flow-container">
+                
+                <!-- COMPANY TRACK -->
+                <div class="track-section">
+                    <div class="track-header company" onclick="openGuide('track-company')" data-step="track-company">
+                        🟨 COMPANY ENRICHMENT TRACK
+                    </div>
+                    
+                    <div class="steps">
+                        <!-- Step 1 -->
+                        <div class="step company" onclick="openGuide('import-csv')" data-step="import-csv">
+                            <div class="step-main">
+                                <div class="step-number">1</div>
+                                <div class="step-icon">📥</div>
+                                <div class="step-content">
+                                    <div class="step-title">Import CSV + Assign Source</div>
+                                    <div class="step-desc">Upload company list and assign fair/event source</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="step company" onclick="openGuide('dedupe-quick')" data-step="dedupe-quick">
+                            <div class="step-main">
+                                <div class="step-number">2</div>
+                                <div class="step-icon">🔄</div>
+                                <div class="step-content">
+                                    <div class="step-title">Deduplicate</div>
+                                    <div class="step-desc">Quick check to avoid enriching same company twice</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Decision 1 -->
+                        <div class="decision" onclick="openGuide('domain-provided')" data-step="domain-provided">
+                            <div class="decision-main">
+                                <div class="decision-icon">◆</div>
+                                <div class="decision-title">Domain Provided?</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Branches -->
+                        <div class="branches">
+                            <div class="branch-label no">NO</div>
+                            <div class="steps">
+                                <!-- Step 3 -->
+                                <div class="step company" onclick="openGuide('enrich-domain')" data-step="enrich-domain">
+                                    <div class="step-main">
+                                        <div class="step-number">3</div>
+                                        <div class="step-icon">🌐</div>
+                                        <div class="step-content">
+                                            <div class="step-title">Enrich Company Domain</div>
+                                            <div class="step-desc">Clay AI enrichment + script fallback</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Decision 2 -->
+                                <div class="decision" onclick="openGuide('domain-found')" data-step="domain-found">
+                                    <div class="decision-main">
+                                        <div class="decision-icon">◆</div>
+                                        <div class="decision-title">Domain Found?</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="branches">
+                                    <div class="branch-label no">NO</div>
+                                    <div class="step company" onclick="openGuide('manual-search')" data-step="manual-search">
+                                        <div class="step-main">
+                                            <div class="step-icon">✍️</div>
+                                            <div class="step-content">
+                                                <div class="step-title">Manual Search → Archive</div>
+                                                <div class="step-desc">Quick search or mark "Archived (no domain)"</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="branches">
+                                    <div class="branch-label yes">YES</div>
+                                    <div class="step company" onclick="openGuide('goto-step4')" data-step="goto-step4">
+                                        <div class="step-main">
+                                            <div class="step-icon">→</div>
+                                            <div class="step-content">
+                                                <div class="step-title">Proceed to Step 4</div>
+                                                <div class="step-desc">Continue to deduplication</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="branches">
+                            <div class="branch-label yes">YES</div>
+                            <div class="steps">
+                                <!-- Step 4 -->
+                                <div class="step company" onclick="openGuide('dedupe-full')" data-step="dedupe-full">
+                                    <div class="step-main">
+                                        <div class="step-number">4</div>
+                                        <div class="step-icon">🔄</div>
+                                        <div class="step-content">
+                                            <div class="step-title">Deduplicate Companies</div>
+                                            <div class="step-desc">Domain → Email → Name matching</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 5 -->
+                                <div class="step company" onclick="openGuide('push-cep')" data-step="push-cep">
+                                    <div class="step-main">
+                                        <div class="step-number">5</div>
+                                        <div class="step-icon">➡️</div>
+                                        <div class="step-content">
+                                            <div class="step-title">Push to Pipeline (CEP)</div>
+                                            <div class="step-desc">Transfer to Company Enrichment Pipeline</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 6 -->
+                                <div class="step integration" onclick="openGuide('crm-check')" data-step="crm-check">
+                                    <div class="step-main">
+                                        <div class="step-number">6</div>
+                                        <div class="step-icon">🔍</div>
+                                        <div class="step-content">
+                                            <div class="step-title">CRM Check</div>
+                                            <div class="step-desc">Verify if companies exist in Pipedrive - CRITICAL</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 7 -->
+                                <div class="step integration" onclick="openGuide('ai-enrich')" data-step="ai-enrich">
+                                    <div class="step-main">
+                                        <div class="step-number">7</div>
+                                        <div class="step-icon">🤖</div>
+                                        <div class="step-content">
+                                            <div class="step-title">AI Enrichment (Clay)</div>
+                                            <div class="step-desc">Clay AI auto-enriches company data</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- EMPLOYEE PIPELINE -->
+                <div class="track-section">
+                    <div class="track-header employee" onclick="openGuide('track-employee')" data-step="track-employee">
+                        🟦 EMPLOYEE ENRICHMENT PIPELINE
+                    </div>
+                    
+                    <div class="steps">
+                        <!-- Step 8 -->
+                        <div class="step employee" onclick="openGuide('emp-import')" data-step="emp-import">
+                            <div class="step-main">
+                                <div class="step-number">8</div>
+                                <div class="step-icon">📥</div>
+                                <div class="step-content">
+                                    <div class="step-title">Import CSV</div>
+                                    <div class="step-desc">Upload employee/contact list</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 9 -->
+                        <div class="step employee" onclick="openGuide('emp-link')" data-step="emp-link">
+                            <div class="step-main">
+                                <div class="step-number">9</div>
+                                <div class="step-icon">🔗</div>
+                                <div class="step-content">
+                                    <div class="step-title">Link Domain from Companies</div>
+                                    <div class="step-desc">Copy company domain by matching name</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Decision -->
+                        <div class="decision" onclick="openGuide('emp-domain-check')" data-step="emp-domain-check">
+                            <div class="decision-main">
+                                <div class="decision-icon">◆</div>
+                                <div class="decision-title">Domain Found?</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Branches -->
+                        <div class="branches">
+                            <div class="branch-label no">NO</div>
+                            <div class="step employee" onclick="openGuide('emp-archive')" data-step="emp-archive">
+                                <div class="step-main">
+                                    <div class="step-icon">📦</div>
+                                    <div class="step-content">
+                                        <div class="step-title">Archive</div>
+                                        <div class="step-desc">No company linked</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="branches">
+                            <div class="branch-label yes">YES</div>
+                            <div class="steps">
+                                <!-- Step 10 -->
+                                <div class="step employee" onclick="openGuide('emp-dedupe')" data-step="emp-dedupe">
+                                    <div class="step-main">
+                                        <div class="step-number">10</div>
+                                        <div class="step-icon">🔄</div>
+                                        <div class="step-content">
+                                            <div class="step-title">Deduplicate Employees</div>
+                                            <div class="step-desc">4-key matching: Domain+Name → Email → LinkedIn</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 11 -->
+                                <div class="step employee" onclick="openGuide('emp-push')" data-step="emp-push">
+                                    <div class="step-main">
+                                        <div class="step-number">11</div>
+                                        <div class="step-icon">➡️</div>
+                                        <div class="step-content">
+                                            <div class="step-title">Push to Pipeline (LEP)</div>
+                                            <div class="step-desc">Smart grouping + upsert</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 12 -->
+                                <div class="step employee" onclick="openGuide('emp-match')" data-step="emp-match">
+                                    <div class="step-main">
+                                        <div class="step-number">12</div>
+                                        <div class="step-icon">🏢</div>
+                                        <div class="step-content">
+                                            <div class="step-title">Match to Company (CEP)</div>
+                                            <div class="step-desc">Link employees to companies by exact domain</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Step 13 -->
+                                <div class="step employee" onclick="openGuide('emp-role')" data-step="emp-role">
+                                    <div class="step-main">
+                                        <div class="step-number">13</div>
+                                        <div class="step-icon">✅</div>
+                                        <div class="step-content">
+                                            <div class="step-title">Keyword Role Check</div>
+                                            <div class="step-desc">Auto-classify: CEO/Founders vs Sales/Marketing</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CONVERGENCE -->
+                <div class="merge">
+                    ↓ Both Tracks Complete ↓
+                </div>
+                
+                <!-- PRE-OUTPUT VALIDATION (visually separated) -->
+                <div class="track-section">
+                    <div class="track-header" style="background: linear-gradient(135deg, #9333ea, #7e22ce); color: white; font-weight: 700; cursor: default;">
+                        🟣 PRE-OUTPUT VALIDATION
+                    </div>
+                    
+                    <div class="steps">
+                        <!-- Step 14 -->
+                        <div class="step" style="background: linear-gradient(135deg, #f3e8ff, #e9d5ff); border-left: 5px solid #9333ea;" onclick="openGuide('crm-check-plus')" data-step="crm-check-plus">
+                            <div class="step-main">
+                                <div class="step-number" style="background: #9333ea; color: white;">14</div>
+                                <div class="step-icon">📋</div>
+                                <div class="step-content">
+                                    <div class="step-title">CRM Check+ (Review & Assignment)</div>
+                                    <div class="step-desc">Strategic Hunter assignment via Google Sheets review</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Decision -->
+                        <div class="decision" onclick="openGuide('can-contact')" data-step="can-contact">
+                            <div class="decision-main">
+                                <div class="decision-icon">◆</div>
+                                <div class="decision-title">Can Contact?</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="merge">
+                    ↓ If Approved ↓
+                </div>
+                
+                <div class="track-section">
+                    <div class="track-header convergence" onclick="openGuide('track-convergence')" data-step="track-convergence">
+                        🟪 FINAL OUTPUT
+                    </div>
+                    
+                    <div class="steps">
+                        <!-- Step 15 -->
+                        <div class="step convergence" onclick="openGuide('note-gen')" data-step="note-gen">
+                            <div class="step-main">
+                                <div class="step-number">15</div>
+                                <div class="step-icon">📝</div>
+                                <div class="step-content">
+                                    <div class="step-title">Generate CRM Note</div>
+                                    <div class="step-desc">3 modes: By Source / View / Multi-Source • Immutable history</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 16 -->
+                        <div class="step convergence" onclick="openGuide('notify-team')" data-step="notify-team">
+                            <div class="step-main">
+                                <div class="step-number">16</div>
+                                <div class="step-icon">📬</div>
+                                <div class="step-content">
+                                    <div class="step-title">Notify Team</div>
+                                    <div class="step-desc">Send notes to Simon for Pipedrive upload</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <button class="sidebar-close" onclick="closeSidebar()">×</button>
+            <div class="sidebar-inner" id="sidebarContent">
+                <!-- Guide content inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Help Tooltip -->
+    <div class="help-tooltip" id="helpTooltip">
+        👆 Click any step or track header to see details →
+    </div>
+    
+    <script>
+        const guides = {
+            'track-company': {
+                title: '🟨 COMPANY ENRICHMENT TRACK',
+                summary: 'The foundation of the B2B Lead Machine - where raw company data is cleaned, validated, and enriched',
+                system: [
+                    '<strong>Tables involved:</strong> [Staging] Company Leads → Company Enrichment Pipeline (CEP) → [Sync] CRM Data',
+                    '<strong>Goal:</strong> Clean, validate, and enrich company data with AI',
+                    '<strong>Output:</strong> Approved companies ready for note generation',
+                    '<strong>Critical:</strong> Complete company track BEFORE employee track',
+                    '<strong>CEP Dashboard:</strong> Central view of all companies with enrichment status',
+                    '<strong>CRM Check:</strong> Quick look at current Pipedrive stage to know what actions needed for specific fair'
+                ],
+                actions: [
+                    'Follow the numbered steps sequentially from top to bottom',
+                    'Complete ALL company processing before starting employee track',
+                    'Use CEP table as central dashboard to monitor enrichment progress',
+                    'Check CRM Check field to see existing Pipedrive status before taking action'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'ALWAYS complete company track before employee track'},
+                    {icon: '✅', text: 'CEP is your single source of truth for company status'},
+                    {icon: '💡', text: 'CRM Check prevents duplicate outreach by showing existing pipeline stage'}
+                ],
+                tips: 'Think of CEP as your company dashboard. Everything you need to know about a company\'s status, enrichment progress, and CRM stage lives here.',
+                tech: null
+            },
+            
+            'import-csv': {
+                title: 'STEP 1: Import CSV + Assign Source',
+                summary: 'Upload company list and assign the fair/event source for proper tracking',
+                system: [
+                    'Standard Airtable CSV import functionality',
+                    'Maps CSV columns to Airtable fields',
+                    'Creates one record per CSV row'
+                ],
+                actions: [
+                    'Go to [Staging] Company Leads table',
+                    'Use Airtable CSV import feature',
+                    '<strong>Verify field mapping carefully:</strong>',
+                    '   <ul><li><strong>Company Name</strong> (MANDATORY)</li><li>Website, Email, Address, etc. (optional but helpful)</li></ul>',
+                    'Complete import',
+                    '',
+                    '<p class="section-header">ASSIGN SOURCE (immediately after import):</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Source = Fair, event, or list where lead originated</li><li style="padding-left: 1.5rem;">• Must be specific: "Expo Real 2025" NOT "Expo Real"</li><li style="padding-left: 1.5rem;">• Add source option in Source field (single select)</li><li style="padding-left: 1.5rem;">• ALSO add in Company Enrichment Pipeline table</li><li style="padding-left: 1.5rem;">• Select all imported records and assign in bulk</li></ul>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Company Name is MANDATORY'},
+                    {icon: '✅', text: 'Additional fields improve enrichment success'},
+                    {icon: '⚠️', text: 'Verify field mapping before confirming import'},
+                    {icon: '💡', text: 'Source must include year (e.g., "Expo Real 2025")'}
+                ],
+                tips: 'Assign source immediately while records are selected. This ensures proper tracking and prevents mixing leads from different events.',
+                tech: null
+            },
+            
+            'dedupe-quick': {
+                title: 'STEP 2: Deduplicate',
+                summary: 'Quick deduplication to prevent enriching the same company multiple times in current upload',
+                system: [
+                    'Matches companies by <strong>normalized company name</strong>',
+                    'Runs BEFORE domain enrichment to save Clay credits',
+                    'Only checks within current upload/batch',
+                    'Marks duplicates for review'
+                ],
+                actions: [
+                    'After import and source assignment, run deduplication script',
+                    '',
+                    '<p class="section-header">Review flagged duplicates:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Check <strong>Master Score</strong> (higher = more complete)</li><li style="padding-left: 1.5rem;">• <strong>Master?</strong> checkbox shows system suggestion</li><li style="padding-left: 1.5rem;">• Review carefully - may not always be most accurate choice</li><li style="padding-left: 1.5rem;">• <strong>YOU decide:</strong> Choose record with cleanest name AND most complete information</li></ul>',
+                    '',
+                    'Mark chosen master, mark others as <strong>"Archived (duplicate)"</strong>',
+                    'Proceed to domain check'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Quick check - only by name within current upload'},
+                    {icon: '✅', text: 'Full dedup (domain/email/name) happens in Step 4'},
+                    {icon: '💡', text: 'Purpose: Avoid wasting Clay credits on same company twice'}
+                ],
+                tips: 'This is a safety check for obvious duplicates. The real deduplication with domain/email matching happens after domain enrichment.',
+                tech: {
+                    script: 'Script: "[Staging] Deduplicate Companies - Simplified Auto"',
+                    notes: 'Normalized name matching within current batch. Groups connected duplicates (if Company A matches Company B by name, and B matches C, all three are grouped). Master selection by completeness score.'
+                }
+            },
+            
+            // DECISION - Short format
+            'domain-provided': {
+                title: 'DECISION: Domain Provided?',
+                summary: 'Check if company domain/website was included in the uploaded CSV',
+                isDecision: true,
+                decisionContent: `
+                    <ul>
+                        <li><strong>✅ YES (Website OR Email present):</strong> Skip to Step 4 (Deduplicate Companies)</li>
+                        <li><strong>❌ NO (Both Website AND Email empty):</strong> Proceed to Step 3 (Enrich Domain)</li>
+                        <li><strong>⚠️ Note:</strong> Domain is essential for deduplication and enrichment</li>
+                    </ul>
+                `
+            },
+            
+            // STEP - Full format
+            'enrich-domain': {
+                title: 'STEP 3: Enrich Company Domain',
+                summary: 'Extract domain from Website/Email with script, then use Clay AI if needed',
+                system: [
+                    '<strong>STEP 1:</strong> Script extraction from Website/Email fields',
+                    'Attempts to extract domain from available data in staging',
+                    '<strong>STEP 2 (if needed):</strong> Clay Domain Enrichment',
+                    'Clay finds company domains through AI-powered web search using Apify',
+                    '<strong>Why Clay is often needed:</strong> Companies rarely have email but not website in CSV'
+                ],
+                actions: [
+                    '<p class="section-header">Run Script First</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Run script: <strong>[Staging] Company Domain (key) from Website/Email - Simplified Auto</strong></li><li>Script extracts domain from Website or Email fields</li><li>Check results: Filter where <strong>Company Domain (key) is empty</strong></li></ol>',
+                    '',
+                    '<p class="section-header">If still empty - Clay Domain Enrichment</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>After script, go to <strong>"Company Domain Enrichment"</strong> view</li><li>Confirm the badge for companies you\'re currently working on is correct</li><li>Navigate to Clay → Domain Enrichment Folder → Domain Enrichment</li><li>Create new table (duplicate existing one, e.g., "E-World 2026")</li><li>In the "Enrich your data" field, import Airtable view: <strong>"Company Domain Enrichment"</strong></li></ol>',
+                    '',
+                    '<p class="section-header">Run Clay Enrichment Fields (in order)</p>',
+                    '<ol style="margin-top: 0.5rem;"><li><strong>identifyDomain</strong> (Apify Google Search Results Scraper)<br>Searches for company domain candidates</li><li><strong>confirmDomain</strong> (GPT-4o-mini, Use AI)<br>AI validates the most likely correct domain</li><li><strong>scrapeCandidate_1</strong><br>Scrapes first domain candidate</li><li><strong>scrapeCandidate_2</strong><br>Scrapes second domain candidate</li><li><strong>scrapeCandidate_3</strong><br>Scrapes third domain candidate</li><li><strong>resolveDomain</strong><br>Final resolution to select correct domain</li></ol>',
+                    '',
+                    '<p class="section-header">Export Results to Airtable</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Once enrichment is complete, check the <strong>"unifiedDomain"</strong> field<br>This contains the final resolved domain for each company</li><li>Click "Update Record" to export back to Airtable</li><li>Enriched domains will appear in <strong>Company Domain (key)</strong> field in Staging</li><li>Verify domains populated correctly</li></ol>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Always run script FIRST - quick and free'},
+                    {icon: '✅', text: 'Clay enrichment needed when script finds nothing'},
+                    {icon: '⚠️', text: 'Run Clay fields in order - each depends on previous'},
+                    {icon: '💡', text: 'unifiedDomain field shows final result before export'}
+                ],
+                tips: 'Run the script first. It\'s quick and works when Website or Email data exists. Clay is your backup for companies missing both. The Clay workflow uses multiple AI steps to ensure domain accuracy.',
+                tech: {
+                    script: 'Script: "[Staging] Company Domain (key) from Website/Email - Simplified Auto" + Clay Apify Integration',
+                    notes: 'Script extracts from Website URL or Email domain. Clay workflow: Apify searches → AI confirms → Multiple scrapes → Final resolution. Output: unifiedDomain → Company Domain (key) in Airtable.'
+                }
+            },
+            
+            // DECISION - Short format
+            'domain-found': {
+                title: 'DECISION: Domain Found?',
+                summary: 'Verify if domain was successfully obtained through script or Clay',
+                isDecision: true,
+                decisionContent: `
+                    <ul>
+                        <li><strong>✅ YES (Domain found):</strong> Proceed to Step 4 (Deduplicate Companies)</li>
+                        <li><strong>❌ NO (Still no domain):</strong> Manual search or archive</li>
+                    </ul>
+                `
+            },
+            
+            // STEP - Full format
+            'manual-search': {
+                title: 'Manual Search → Archive',
+                summary: 'Last attempt to find domain before archiving company',
+                system: [
+                    'No automation - manual action required',
+                    'Final attempt to find company domain before archiving'
+                ],
+                actions: [
+                    '<p class="section-header">For each company without domain:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Google search: "[Company Name] official website"</li><li style="padding-left: 1.5rem;">• Check LinkedIn company page</li><li style="padding-left: 1.5rem;">• Search business directories</li></ul>',
+                    '',
+                    '<p class="section-header">If domain found:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Manually enter in Company Domain (key) field</li><li style="padding-left: 1.5rem;">• Return to flow (proceed to Step 4)</li></ul>',
+                    '',
+                    '<p class="section-header">If NO domain found:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Mark as <strong>"Archived (no domain found)"</strong></li><li style="padding-left: 1.5rem;">• Move to archive view</li><li style="padding-left: 1.5rem;">• Exclude from further processing</li></ul>'
+                ],
+                criteria: [
+                    {icon: '⚠️', text: 'Set time limit per company (max 2 minutes)'},
+                    {icon: '❌', text: 'If no website found quickly → Archive'},
+                    {icon: '💡', text: 'Very small companies often lack websites'}
+                ],
+                tips: 'Set time limit per company (max 2 minutes). If no website found quickly, archive and move on - they\'re likely too small for your ICP.',
+                tech: null
+            },
+            
+            // DECISION - Short format  
+            'goto-step4': {
+                title: 'Proceed to Step 4',
+                summary: 'Domain successfully enriched - continue to full deduplication',
+                isDecision: true,
+                decisionContent: `
+                    <ul>
+                        <li>Domain has been successfully obtained</li>
+                        <li>Proceed to <strong>Step 4: Deduplicate Companies</strong></li>
+                        <li>Full matching process with domain, email, and name</li>
+                    </ul>
+                `
+            },
+            
+            // STEP - Full format
+            'dedupe-full': {
+                title: 'STEP 4: Deduplicate Companies',
+                summary: 'Advanced deduplication using Domain → Email → Name priority matching',
+                system: [
+                    '<strong>1st Match:</strong> Website domain (most reliable)',
+                    '<strong>2nd Match:</strong> Normalized email domain',
+                    '<strong>3rd Match:</strong> Normalized company name',
+                    'Groups connected duplicates automatically',
+                    'Master selection: Highest completeness score → Earliest created → Lowest ID'
+                ],
+                actions: [
+                    'Run <strong>"Deduplicate Companies"</strong> script',
+                    'Review duplicate groups (Group by <strong>Dedup Key</strong>)',
+                    '',
+                    '<p class="section-header">Verify suggested Master:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Check <strong>Master? = checked</strong></li><li style="padding-left: 1.5rem;">• Check completeness - may not always be most accurate</li><li style="padding-left: 1.5rem;">• YOU choose: Cleanest name + most complete info</li></ul>',
+                    '',
+                    'Copy any unique data from duplicates to Master',
+                    'Mark duplicates as <strong>"Archived (duplicate)"</strong>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Domain matching is highest priority - most reliable'},
+                    {icon: '✅', text: 'System suggests best Master by completeness'},
+                    {icon: '❌', text: 'DO NOT delete before reviewing for unique data'},
+                    {icon: '💡', text: 'Review carefully - suggestion may not always be most accurate'}
+                ],
+                tips: 'The system suggests the best Master based on completeness. Review carefully but trust the logic unless you see data quality issues.',
+                tech: {
+                    script: 'Script: "Deduplicate Companies - Simplified Auto"',
+                    notes: '3-level matching priority. Groups connected duplicates (if A matches B by domain, and B matches C by email, all three grouped). Master score: filled fields + bonuses. Outputs: Duplicate?, Dedup Key, Master?, Master Score.'
+                }
+            },
+            
+            'push-cep': {
+                title: 'STEP 5: Push to Pipeline (CEP)',
+                summary: 'Transfer validated companies from Staging to Company Enrichment Pipeline',
+                system: [
+                    '<strong>Smart cache:</strong> If you have multiple staging records with same domain, system groups them together and creates only ONE company in pipeline',
+                    '<strong>Create or Update:</strong> System checks if company already exists by domain. Found = updates info, Not found = creates new',
+                    '<strong>Source accumulation:</strong> If company exists from previous fair, new source is ADDED to the list (e.g., "Expo Real 2025, MIPIM 2026")',
+                    '<strong>No overwrite:</strong> System only fills EMPTY fields in pipeline - your existing data stays safe',
+                    'Marks staging records as <strong>"Pushed to Pipeline"</strong> after successful transfer'
+                ],
+                actions: [
+                    'Ensure deduplication is complete (only Masters remain)',
+                    'Go to <strong>"Ready Data View"</strong>',
+                    'Click <strong>"Push Companies"</strong> button',
+                    'Review preview: How many will be CREATED vs UPDATED',
+                    'Click <strong>"Accept"</strong>',
+                    'Verify in Company Enrichment Pipeline that records appeared',
+                    'Check staging: <strong>Staging Status = "Pushed to Pipeline"</strong>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Only Master records are pushed (duplicates stay in staging)'},
+                    {icon: '✅', text: 'Existing pipeline data NOT overwritten (only fills empty fields)'},
+                    {icon: '💡', text: 'Source field accumulates: "Expo Real 2025, MIPIM 2026"'},
+                    {icon: '⚠️', text: 'Cache prevents duplicate CEP records from same batch'}
+                ],
+                tips: 'The cache is smart: if your CSV has the same company 3 times, it creates only 1 record in pipeline with all data merged. Always use the v4 script with cache.',
+                tech: {
+                    script: 'Script: "Push Companies (v4) - Improved with Cache"',
+                    notes: 'In-memory recordCache prevents duplicates in same batch. Upsert: Domain → Name. Source merge: singleSelect → multipleSelect union. Only fills empty fields.'
+                }
+            },
+            
+            'crm-check': {
+                title: 'STEP 6: CRM Check',
+                summary: 'CRITICAL: Check if companies already exist in Pipedrive CRM to identify companies you should NOT contact',
+                system: [
+                    'Uses Metabase to check company status in Pipedrive',
+                    'Identifies which companies are already in your CRM pipeline',
+                    'Shows current deal stage, status, and hunting stage',
+                    'Prevents contacting companies you should NOT reach out to',
+                    'Uploads Metabase results to [Sync] CRM Data table, then links to CEP for visibility'
+                ],
+                actions: [
+                    '<p class="section-header">Prepare CSV for Check:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Create CSV with required format</li></ol>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• <strong>company_name</strong> (MANDATORY)</li><li style="padding-left: 1.5rem;">• <strong>contact_name</strong> (can be empty, but column needed)</li><li style="padding-left: 1.5rem;">• <strong>website_domain</strong> (MANDATORY)</li><li style="padding-left: 1.5rem;">• <strong>email</strong> (can be empty, but column needed)</li></ul>',
+                    '',
+                    '<p class="section-header">Run Metabase Check:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Go to <strong>Metabase-Folder</strong> (<a href="https://miro.com/app/board/uXjVJZcjNZU=/?moveToWidget=3458764640141079579&cot=14" target="_blank">Link</a>)</li><li>Upload CSV (click "Upload data to XXX_01_01 testing" - creates new model)</li><li><strong>Copy model name from URL</strong> (e.g., <span style="color: var(--yellow-dark); font-weight: 700;">3991-2025-07-23-kam</span>)</li><li>Open model: <strong>"uploaded_csv_file_duplicate_check"</strong></li><li>Go to the <strong>query editor</strong></li><li>Find and replace <span style="color: var(--yellow-dark); font-weight: 700;">YOUR-MODEL-ID</span> with the model name from step 3</li><li>Click <strong>"Run"</strong> the model</li><li>Click <strong>"Save Changes"</strong></li><li>See output: <strong>Link to Dashboard</strong> (<a href="https://metabase.fuchs-eule.de/dashboard/396-pipedrive-import" target="_blank">Dashboard Link</a>)</li><li>Review results and click <strong>"Download results"</strong> button</li></ol>',
+                    '',
+                    '<p class="section-header">Upload Results to Airtable:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Go to Airtable table: <strong>[Sync] CRM Data</strong></li><li>Upload the downloaded CSV using Airtable CSV import</li><li>This updates company CRM status in [Sync] CRM Data table</li></ol>',
+                    '',
+                    '<p class="section-header">Link to Company Enrichment Pipeline:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>In Company Enrichment Pipeline, find the field: <strong>[Sync] CRM Data</strong></li><li><strong>MANUALLY</strong> paste the website link (key) to connect records by domain</li><li>Now you can see CRM status directly in CEP table</li></ol>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Run CRM Check to identify companies you should NOT contact'},
+                    {icon: '✅', text: 'CSV format must match exactly (4 columns, 2 mandatory)'},
+                    {icon: '⚠️', text: 'Model ID must be copied exactly from URL'},
+                    {icon: '💡', text: 'CRM Check shows: Existing deals, Lost deals, "Do not contact" status'}
+                ],
+                tips: 'This is your most important quality control step. CRM Check prevents you from contacting companies already in active deals or marked as "lost" - saving time and protecting relationships.',
+                tech: {
+                    script: 'External: Metabase Model "uploaded_csv_file_duplicate_check"',
+                    notes: 'Queries Pipedrive via Metabase. Matches by company_name and website_domain. Returns: lead_status, action_recommendation, firmen_status, hunting_deal_stage_n. Results uploaded to [Sync] CRM Data, then manually linked to CEP via Company Domain field.'
+                }
+            },
+            
+            'ai-enrich': {
+                title: 'STEP 7: AI Enrichment (Clay)',
+                summary: 'Clay AI automatically enriches company data with comprehensive business intelligence from web sources',
+                system: [
+                    '<div style="background: linear-gradient(135deg, #fee2e2, #fecaca); border-left: 5px solid #ef4444; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem; font-weight: 600;">⚠️ <strong>UNDER CONSTRUCTION:</strong> This enrichment process is being updated to use Apify. Documentation will be updated soon.</div>',
+                    '<strong>Key fields enriched:</strong> Company Type, Headquarters, Activity Regions, Employees, Year Founded, CEO Names, Other Contacts, Reference Projects, Real Estate Activity',
+                    '<strong>Additional data:</strong> Company Phone/Email, Office Hours, Property Management Scope, Key Size Metrics, Institutional Clients',
+                    'Workflow: Airtable → Clay (AI enrichment) → Back to Airtable',
+                    'Maps ONLY to Clay columns in Airtable to avoid overwriting existing data'
+                ],
+                actions: [
+                    '<p class="section-header">1. Prepare Export for Clay:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>In Company Enrichment Pipeline, filter out "do not contact" companies</li><li>Set status to <strong>"3. Enrichment in Progress"</strong> for companies to enrich</li></ol>',
+                    '',
+                    '<p class="section-header">2. Enrich in Clay:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Go to Clay project "Fair Leads"</li><li>Go to your event table (e.g., "Expo Real 2025")</li><li>Create new table OR update existing</li><li>Click <strong>"+ New row"</strong> → <strong>"Insert 1 column left"</strong> → <strong>"Add enrichment"</strong></li><li>Look for <strong>"airtable"</strong> → <strong>"Enrich your data from Airtable"</strong></li></ol>',
+                    '',
+                    '<p class="section-header">2. Import new company records:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Click on <strong>"money-button"</strong> shown in screenshot</li><li>Get new companies to be ENRICHED from Airtable</li><li>Click <strong>"Run now"</strong></li></ol>',
+                    '',
+                    '<p class="section-header">3. Filter out "complete" records:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Remove already enriched companies from view</li></ul>',
+                    '',
+                    '<p class="section-header">4. Map data:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Click on <strong>Airtable Record</strong></li><li>Create columns for: <strong>Airtable ID, Company Name, Company Domain (Key), City</strong>, and other inputs relevant for Clay prompt</li></ol>',
+                    '',
+                    '<p class="section-header">5. Run AI Research:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Test some columns, see if it looks right</li><li>Then bulk-run all columns</li></ol>',
+                    '',
+                    '<p class="section-header">6. Start Prompt (CRITICAL SAFEGUARD):</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>In <strong>Run settings</strong>, activate <strong>"Only run if"</strong> condition</li><li>Set formula: <strong>{{Status}}?.toLowerCase()?.includes("3. enrichment in progress (clay)")</strong></li><li>This prevents accidental re-enrichment of completed companies</li></ol>',
+                    '',
+                    '<p class="section-header">7. Export to Airtable:</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Click: <strong>Insert new column → Add enrichment → "update record airtable" → Choose Update Record</strong></li><li><strong>CRITICAL:</strong> Map to Clay columns ONLY! (e.g., "(Clay) Company Name", "(Clay) Domain", etc.)</li><li>Do NOT map to main columns - this preserves your existing verified data</li><li>Run <strong>"Update Record"</strong></li></ol>',
+                    '',
+                    'Review enriched data in Company Enrichment Pipeline',
+                    'Verify accuracy of AI-generated information',
+                    'Set <strong>Company Approved? = "Yes"</strong> for validated companies'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'ALWAYS use conditional run - prevents accidental re-enrichment'},
+                    {icon: '✅', text: 'Map ONLY to (Clay) prefixed columns - protects existing data'},
+                    {icon: '⚠️', text: 'Verify AI accuracy - especially Company Type and Activity Regions'}
+                ],
+                tips: 'The conditional run formula is your safety net. It ensures Clay only processes companies you explicitly marked for enrichment, preventing costly credit waste and data overwrites.',
+                tech: {
+                    script: 'External: Clay AI - Airtable Integration',
+                    notes: 'Bidirectional sync: Airtable → Clay (import) → Clay AI (enrich) → Airtable (export to Clay columns). Conditional execution via Status field. Maps to separate (Clay) columns to preserve source data integrity.'
+                }
+            },
+            
+            // EMPLOYEE PIPELINE
+            'track-employee': {
+                title: '🟦 EMPLOYEE ENRICHMENT PIPELINE',
+                summary: 'Process individual contacts and link them to enriched companies',
+                system: [
+                    '<strong>Tables involved:</strong> [Staging] Employee Leads → Lead Enrichment Pipeline (LEP)',
+                    '<strong>Prerequisite:</strong> Company track MUST be completed first',
+                    '<strong>Goal:</strong> Validate employees, classify roles, link to companies',
+                    '<strong>Output:</strong> Validated decision-makers ready for note generation',
+                    '<strong>Key linking:</strong> Employees linked to CEP companies by exact domain match'
+                ],
+                actions: [
+                    'ALWAYS complete Company Track before starting Employee Track',
+                    'Follow numbered steps from Import → Link → Dedupe → Push → Classify',
+                    'Link employees to their companies via domain matching',
+                    'Filter for decision-makers (CEO, Founders, Directors) vs non-relevant (Marketing, Sales)'
+                ],
+                criteria: [
+                    {icon: '⚠️', text: 'Company Track must be 100% complete first'},
+                    {icon: '✅', text: 'Employees without company links will be archived'},
+                    {icon: '💡', text: 'Role classification filters decision-makers automatically'}
+                ],
+                tips: 'The employee track depends entirely on having companies already enriched. Skip this track if company track is incomplete.',
+                tech: null
+            },
+            
+            'emp-import': {
+                title: 'STEP 8: Import Employee CSV',
+                summary: 'Upload employee/contact list to Staging Employee Leads table and assign source',
+                system: [
+                    'Standard Airtable CSV import',
+                    'Maps employee data to fields',
+                    'Creates one record per contact',
+                    '<strong>Source assignment is CRITICAL</strong> for traceability - same as company import'
+                ],
+                actions: [
+                    'Go to [Staging] Employee Leads table',
+                    'Use Airtable CSV import',
+                    '',
+                    '<p class="section-header">Field mapping:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Name, Email, Position (recommended)</li><li style="padding-left: 1.5rem;">• Company Name (critical for linking)</li><li style="padding-left: 1.5rem;">• LinkedIn URL (helps with deduplication)</li><li style="padding-left: 1.5rem;">• Role at Event, Phone Number (optional but useful)</li></ul>',
+                    '',
+                    'Complete import',
+                    '',
+                    '<p class="section-header">ASSIGN SOURCE (immediately after import):</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Source = Fair, event, or list where lead originated</li><li style="padding-left: 1.5rem;">• Must be specific: "Expo Real 2025" NOT "Expo Real"</li><li style="padding-left: 1.5rem;">• Add source option in Source field (single select)</li><li style="padding-left: 1.5rem;">• Select all imported records and assign in bulk</li><li style="padding-left: 1.5rem;">• <strong>CRITICAL:</strong> Same as company import - ensures traceability</li></ul>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Company Name is critical for linking to companies'},
+                    {icon: '✅', text: 'Email OR LinkedIn needed for deduplication'},
+                    {icon: '💡', text: 'Position field enables automatic role classification'},
+                    {icon: '⚠️', text: 'Source assignment is MANDATORY - do it immediately after import'}
+                ],
+                tips: 'Assign source immediately while records are selected. This ensures proper tracking and prevents mixing leads from different events - exactly like company import process.',
+                tech: null
+            },
+            
+            'emp-link': {
+                title: 'STEP 9: Deduplicate + Link Domain from Companies',
+                summary: 'Three-part process: Quick dedup → Link domains from staging companies → Full dedup with domains',
+                system: [
+                    '<strong>STEP 1:</strong> Quick deduplication by Employee Name + Company Name',
+                    'Prevents double domain enrichment before linking',
+                    '<strong>STEP 2:</strong> Matches Company Name between Staging Employees and Staging Companies',
+                    'Copies Company Domain (key) to Clean Domain',
+                    '<strong>Why Staging→Staging match?</strong> Company names stay identical in staging, but may change when pushed to CEP, causing missed matches',
+                    '<strong>STEP 3:</strong> Full deduplication with domains for higher accuracy'
+                ],
+                actions: [
+                    '<p class="section-header">STEP 1: Deduplicate First</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Run deduplication script on Staging Employee Leads</li><li>Matches by: Employee Name + Company Name</li><li>Review duplicates and mark as <strong>"Archived (duplicate)"</strong></li><li>Prevents enriching same employee twice</li></ol>',
+                    '',
+                    '<p class="section-header">STEP 2: Link Domains</p>',
+                    '<ol style="margin-top: 0.5rem;"><li><strong>REVIEW OR CREATE</strong> source view in Staging Companies:</li></ol>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Filter: Source = "Expo Real 2025" (your current event)</li><li style="padding-left: 1.5rem;">• Script will use THIS view to find domains</li></ul>',
+                    '<ol start="2" style="margin-top: 0.5rem;"><li>Run script: <strong>"Record Linker - URL from Staging Companies"</strong></li><li><strong>USER ACTION REQUIRED:</strong> Select the view you created/reviewed</li><li>Script matches Company Name between:<br>• Staging Employee Leads ← Staging Company Leads</li><li>Copies: Company Domain (key) → Clean Domain</li><li>Verify employees have Clean Domain populated</li></ol>',
+                    '',
+                    '<p class="section-header">STEP 3: Manual Review if Domain Not Found</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Filter: Clean Domain is empty</li><li style="padding-left: 1.5rem;">• Check reason:</li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 3rem;"><li style="padding-left: 1.5rem;">- Domain wasn\'t found in staging companies?</li><li style="padding-left: 1.5rem;">- Company has no domain?</li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Mark as <strong>"Archived (no domain found)"</strong></li></ul>',
+                    '',
+                    '<p class="section-header">STEP 4: Deduplicate Again (with domains)</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Now run full dedup with domains for higher accuracy</li><li style="padding-left: 1.5rem;">• Same process as STEP 1 but more reliable with domain data</li></ul>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Dedupe BEFORE linking prevents wasting domain enrichment credits'},
+                    {icon: '✅', text: 'Staging→Staging match avoids name changes from CEP push'},
+                    {icon: '⚠️', text: 'Must create/review source-specific view in Staging Companies'},
+                    {icon: '💡', text: 'Dedupe after linking is more accurate with domain data'}
+                ],
+                tips: 'The two-phase deduplication approach: first removes obvious duplicates before linking (saves credits), second pass with domains catches subtle duplicates missed in first pass.',
+                tech: {
+                    script: 'Scripts: "Deduplicate Records" + "Record Linker - URL from Staging Companies"',
+                    notes: 'Dedup 1: Employee Name + Company Name matching. Link: Company Name match between stagings. Dedup 2: Domain + Name for higher accuracy. User must select source view.'
+                }
+            },
+            
+            'emp-domain-check': {
+                title: 'DECISION: Employee Domain Found?',
+                summary: 'Verify if employee was successfully linked to company via domain',
+                isDecision: true,
+                decisionContent: `
+                    <ul>
+                        <li><strong>✅ YES (Clean Domain populated):</strong> Proceed to Step 9 (Deduplicate Employees)</li>
+                        <li><strong>❌ NO (Clean Domain empty):</strong> Archive employee - no company link</li>
+                        <li><strong>⚠️ Note:</strong> Employees without company cannot generate useful CRM notes</li>
+                    </ul>
+                `
+            },
+            
+            'emp-archive': {
+                title: 'Archive Employee',
+                summary: 'Employee could not be linked to any company - archive for manual review or discard',
+                system: [
+                    'No automation - manual decision',
+                    'Triggered when Clean Domain is empty after linking attempt'
+                ],
+                actions: [
+                    'Filter: <strong>Clean Domain is empty</strong>',
+                    'For each employee:',
+                    '   <ul><li>Check LinkedIn - can you identify their company?</li><li>If company found: Add to Staging Companies → Re-link</li><li>If no company OR irrelevant: Mark "Archived (no company)"</li></ul>',
+                    'Move archived employees to separate view'
+                ],
+                criteria: [
+                    {icon: '❌', text: 'If no company identified → Archive'},
+                    {icon: '✅', text: 'If highly relevant contact → Invest time to find company'},
+                    {icon: '💡', text: 'Check for company name mismatches (abbreviations, etc.)'}
+                ],
+                tips: 'Before archiving, verify the company name mismatch issue. Sometimes "IBM" in employee CSV doesn\'t match "International Business Machines Corp" in companies.',
+                tech: null
+            },
+            
+            'emp-dedupe': {
+                title: 'STEP 10: Deduplicate Employees',
+                summary: 'Final deduplication with domains: 4-key matching for highest accuracy',
+                system: [
+                    'This is the SECOND deduplication - now WITH domains for higher precision',
+                    '<strong>Priority 1 (Upsert Key):</strong> Clean Domain + Name Signature (initials + length)',
+                    '<strong>Priority 2 (Secondary Key):</strong> Clean Domain + Clean Name (normalized full name)',
+                    '<strong>Priority 3 (Fallback):</strong> Email (exact match)',
+                    '<strong>Priority 4 (Fallback):</strong> LinkedIn Slug (URL path)',
+                    'Groups connected duplicates automatically',
+                    'Master selection: Highest completeness score → Earliest created → Lowest ID'
+                ],
+                actions: [
+                    'Run <strong>"Deduplicate Employees"</strong> script',
+                    'Review duplicate groups (Group by <strong>Dedup Key</strong>)',
+                    '',
+                    '<p class="section-header">Verify Master selection:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Check Master Score (completeness)</li><li style="padding-left: 1.5rem;">• May not always be most accurate - review carefully</li><li style="padding-left: 1.5rem;">• YOU decide: Most complete contact info</li></ul>',
+                    '',
+                    'Mark duplicates as <strong>"Archived (duplicate)"</strong>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Domain + Name matching is now most reliable (wasn\'t available in first dedup)'},
+                    {icon: '✅', text: 'Keep employee with most complete info (email, phone, LinkedIn, position)'},
+                    {icon: '⚠️', text: 'Verify it\'s the SAME person - similar names at same company could be different people'},
+                    {icon: '💡', text: 'LinkedIn URL is most reliable unique identifier'}
+                ],
+                tips: 'This second deduplication catches duplicates missed in the first pass (before domains were linked). Domain + Name matching is much more accurate than Name alone.',
+                tech: {
+                    script: 'Script: "Deduplicate Records by Website, Email or Name - Simplified Auto"',
+                    notes: '4-key matching priority. Groups connected duplicates. Master score: filled fields count. Outputs: Duplicate?, Master?, Dedup Key, Dedup Key 2 (LI).'
+                }
+            },
+            
+            'emp-push': {
+                title: 'STEP 11: Push to Pipeline (LEP)',
+                summary: 'Transfer validated employees from Staging to Lead Enrichment Pipeline with smart grouping',
+                system: [
+                    '<strong>Smart sibling grouping:</strong> If you have multiple staging records for same employee (same Dedup Key), system combines them into ONE complete record before creating',
+                    '<strong>Create or Update:</strong> System checks if employee exists in pipeline. Found = updates info, Not found = creates new',
+                    '<strong>Source accumulation:</strong> Previous event sources stay, new source ADDED (e.g., "Expo Real 2025, MIPIM 2026")',
+                    '<strong>Role field behavior:</strong> Latest event role REPLACES previous value (even if new value is empty)',
+                    '<strong>Position field:</strong> Only updates if new value is NOT empty',
+                    '<strong>Other fields:</strong> Only fills EMPTY fields - your existing data stays safe',
+                    'Marks staging records as <strong>"Pushed to Pipeline"</strong> after successful transfer'
+                ],
+                actions: [
+                    'Ensure deduplication is complete (only Masters remain)',
+                    'Go to view showing records ready to push',
+                    'Run <strong>"Push Employees to LEP"</strong> script',
+                    'Review preview: How many will be CREATED vs UPDATED',
+                    'Click <strong>"Accept"</strong>',
+                    'Verify in Lead Enrichment Pipeline that records appeared',
+                    'Check staging: <strong>Staging Status = "Pushed to Pipeline"</strong>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Source field accumulates across events - all sources preserved'},
+                    {icon: '✅', text: 'Existing pipeline data NOT overwritten (only fills empty fields)'},
+                    {icon: '⚠️', text: 'Role field from latest event ALWAYS replaces (even with empty) - by design'},
+                    {icon: '💡', text: 'Smart grouping prevents duplicate LEP records from same batch'}
+                ],
+                tips: 'The sibling merge is powerful: if your CSV has the same employee 3 times with different partial info, they merge into 1 complete record. Don\'t skip deduplication!',
+                tech: {
+                    script: 'Script: "[Staging] Pushing Employees to Lead Enrichment Pipeline - Simplified Auto"',
+                    notes: 'Sibling merge by Dedup Key BEFORE upsert. Match priority: LinkedIn > Email > Domain+NameSig > Domain+Name. Special rules: Lead Source (union), Role (always overwrite even if empty), Position (overwrite if not empty). Other fields: only fill if empty.'
+                }
+            },
+            
+            'emp-role': {
+                title: 'STEP 13: Keyword Role Check',
+                summary: 'Automatic role classification to identify decision-makers vs non-relevant contacts',
+                system: [
+                    '<div style="background: var(--yellow-light); border: 3px solid var(--yellow); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0; font-weight: 600;">🎯 <strong>CRITICAL DECISION POINT:</strong><br>Only enrich employees if <strong>Company Approved? = Yes</strong><br>Do NOT waste enrichment credits on unapproved companies!<br><br>Specialized views show which leads are ready for enrichment, review, or validation.</div>',
+                    '<strong>What does the script do?</strong> Classifies employee positions according to our whitelist/blacklist keywords',
+                    '',
+                    '<strong>• VALIDATED:</strong> C-Level positions (CEO, CTO, CFO, Founders, Managing Directors, Board Members) → Decision-makers we WANT to contact',
+                    '<strong>• NO RELEVANT:</strong> Profiles like Marketing, Sales (generic), Legal, HR, Consultants → NOT decision-makers, do NOT contact',
+                    '<strong>• NEEDS ROLE VALIDATION:</strong> Position field is empty → Requires AI enrichment',
+                    '<strong>• UNDEFINED:</strong> No match with keywords BUT position exists → Requires manual review'
+                ],
+                actions: [
+                    'Navigate to Lead Enrichment Pipeline',
+                    'Run <strong>"Keyword Role Check"</strong> script',
+                    'Review <strong>Keyword Role Check</strong> field results',
+                    'Based on result, follow appropriate workflow:',
+                    '',
+                    '<p class="section-header">WORKFLOW A: UNDEFINED</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Manual review required</li><li style="padding-left: 1.5rem;">• Check position on LinkedIn</li><li style="padding-left: 1.5rem;">• Decide: Is this a decision-maker?</li><li style="padding-left: 1.5rem;">• Update Lead Final Status accordingly</li></ul>',
+                    '',
+                    '<p class="section-header">WORKFLOW B: NEEDS ENRICHMENT</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Verify <strong>Company Approved? = Yes</strong></li><li>If approved, run AI field:<br><strong>"Strong Role Enrichment + Target Person Check (5 credits)"</strong></li><li>AI researches position and determines if C-Level</li><li>Output auto-splits into 2 fields</li></ol>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">- Enriched Role</li><li style="padding-left: 1.5rem;">- Target Person Check Enriched</li></ul>',
+                    '<ol start="5" style="margin-top: 0.5rem;"><li>Lead auto-moves to appropriate view</li></ol>',
+                    '',
+                    '<p class="section-header">POST-ENRICHMENT REVIEW:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• If AI result = <strong>UNDEFINED</strong>:</li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">- Still needs manual review</li><li style="padding-left: 1.5rem;">- Check LinkedIn profile</li><li style="padding-left: 1.5rem;">- Decide: Validated or No Relevant</li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• If AI result = <strong>Role validated (manual check)</strong>:</li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">- Needs final manual approval</li><li style="padding-left: 1.5rem;">- Could be validated OR no relevant</li><li style="padding-left: 1.5rem;">- Update Lead Final Status accordingly</li></ul>',
+                    '',
+                    'Set <strong>Lead Final Status = "🟢 Validated"</strong> for confirmed decision-makers',
+                    '',
+                    '<p class="section-header">📊 SPECIALIZED VIEWS:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;"><strong>View: "(event) Role validated (manual check)"</strong></li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• Company: Approved ✅</li><li style="padding-left: 1.5rem;">• Role: Validated ✅</li><li style="padding-left: 1.5rem;">• Action: Change Lead Final Status to "🟢 Validated"</li></ul>',
+                    '',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;"><strong>View: "(event) Unclear role enrichment (manual check)"</strong></li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• Company: Approved ✅</li><li style="padding-left: 1.5rem;">• Role: Uncertain ⚠️</li><li style="padding-left: 1.5rem;">• Action: Review position, update Final Status</li></ul>',
+                    '',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;"><strong>View: "(event) Role enrichment needed"</strong></li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• Company: Approved ✅</li><li style="padding-left: 1.5rem;">• Role: Empty ❌</li><li style="padding-left: 1.5rem;">• Action: Run AI enrichment</li></ul>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'VALIDATED: CEO, CTO, Founders, MDs, Board → Definitely contact'},
+                    {icon: '❌', text: 'NO RELEVANT: Marketing, Sales generics, Legal, HR → Do NOT contact'},
+                    {icon: '⚠️', text: 'SALES BLOCKERS: VP Sales, Head of Sales blocked (gatekeepers, not decision-makers)'},
+                    {icon: '💡', text: 'UNDEFINED: Ambiguous positions → Manual review required'}
+                ],
+                tips: 'The system intentionally blocks sales leadership (VP Sales, Head of Sales) - they\'re gatekeepers, not decision-makers. Trust this logic. Only run AI enrichment when company is approved to save credits.',
+                tech: {
+                    script: 'Script: "Employees - Keyword Role Check"',
+                    notes: `Priority: SALES_BLOCKERS > WHITELIST > BLACKLIST > Empty Position > Else. Field must exist as singleSelect.
+                    
+<strong>COMPLETE WHITELIST (Validated):</strong>
+• C-Level & Owners: CEO, Chief Executive Officer, Co-founder, Founder, Owner, Inhaber(in), Eigentümer(in)
+• Managing Directors: Managing Director, Geschäftsführer(in), Executive Director, President
+• Board: Chair(man/woman), Board Member/Director, Vorstand, Aufsichtsrat
+• C-Suite: COO, CIO, CTO, CPO, CCO (Chief Commercial/Growth), Managing Partner, Senior Partner, Founding Partner, Country Manager/Head
+• Function Heads (Selected): Head of Asset Management, Real Estate, Portfolio Management, Technical Asset Management, Construction Operations, M&A, Commercial Real Estate, Healthcare Germany
+• Directors: Director (Asset/Portfolio/Real Estate/Investment), VP Asset Management, Fund Manager, Investment Director
+
+<strong>SALES BLOCKERS (No Relevant - Highest Priority):</strong>
+• Vice President Sales, VP Sales, Head of Sales, Leitung Vertrieb
+
+<strong>COMPLETE BLACKLIST (No Relevant):</strong>
+• Marketing: Marketing, Head of Communications, PR, Brand, Event Marketing
+• Sales Generic: Sales, Sales Manager, Account Executive, Key Account (KAM), Distribution, Retail Sales
+• Legal: Law, Lawyer, Counsel, Attorney, Rechtsanwalt
+• HR: Human Resources, HR, Recruiting, Talent Acquisition, Coaching
+• Finance Generic: Finance, Treasury
+• Consultants: Consultant, Advisor, Berater, Broker
+• Project Management: Project Manager, Projektmanager, Projektleiter
+• Other: Designer`
+                }
+            },
+            
+            'emp-match': {
+                title: 'STEP 12: Match to Company (CEP)',
+                summary: 'Link employees to companies immediately after pipeline entry - enables company-based filtering in later steps',
+                system: [
+                    '<strong>Connects employees to companies:</strong> Matches by exact domain (employee\'s Clean Domain = company\'s Company Domain Key)',
+                    '<strong>Handles duplicates smartly:</strong> If multiple companies share same domain, system picks the best one',
+                    '<strong>Priority ranking:</strong>',
+                    '   • "Validated" companies preferred over "Not defined yet"',
+                    '   • "Not defined yet" preferred over "Not found"',
+                    '   • "Not found" preferred over "Rejected"',
+                    '   • Tiebreaker: Oldest created time wins',
+                    '<strong>Safety:</strong> Only creates links if Link to CEP field is empty (won\'t overwrite existing links)'
+                ],
+                actions: [
+                    'Ensure Company Enrichment Pipeline has companies with domains',
+                    'Run <strong>"Employee - Matching Company Script"</strong>',
+                    'Review stats shown by script:',
+                    '   <ul><li>Links created</li><li>Employees already linked (skipped)</li><li>Domains not found in CEP</li></ul>',
+                    'Verify employees have <strong>Link to CEP</strong> populated',
+                    '',
+                    '<p class="section-header">For employees without match:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Check if their company exists in CEP</li><li style="padding-left: 1.5rem;">• If missing, add company to Staging Companies</li><li style="padding-left: 1.5rem;">• Run full company flow first</li><li style="padding-left: 1.5rem;">• Then re-run this matching script</li></ul>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Domains must match EXACTLY (company.com = company.com)'},
+                    {icon: '✅', text: 'If multiple companies: "Validated" wins over "Not defined"'},
+                    {icon: '⚠️', text: 'Employees without company in CEP will NOT link'},
+                    {icon: '💡', text: 'Always complete Company Track first before employee matching'}
+                ],
+                tips: 'If many employees fail to link, their companies aren\'t in CEP yet. Process those companies through full company track first, then re-run this script.',
+                tech: {
+                    script: 'Script: "Employee - Matching Company Script"',
+                    notes: 'Exact domain match. Duplicate resolution: Approved rank (Validated=3, Not defined=2, Not found=1, Rejected=0) > Created time > Record ID. Only links if Link to CEP is empty. Does NOT create companies.'
+                }
+            },
+            
+            // PRE-OUTPUT VALIDATION
+            'crm-check-plus': {
+                title: 'STEP 14: CRM Check+ (Review & Assignment)',
+                summary: 'Strategic review process: Determine which companies can be contacted and assign to Hunters via Google Sheets',
+                system: [
+                    '<strong>Purpose:</strong> Determines which companies can be contacted for this specific event',
+                    '<strong>Separates:</strong> New Leads vs Existing Organizations',
+                    '<strong>Hunter assignment:</strong> Strategic distribution via Google Sheets collaborative review',
+                    '<strong>Prevents:</strong> Duplicate outreach, contacting wrong companies, missed strategic opportunities',
+                    '<strong>One-time process:</strong> Complete this before generating notes for the entire event'
+                ],
+                actions: [
+                    '<p class="section-header">PART 1: Create Views in CEP</p>',
+                    'In Company Enrichment Pipeline, create 2 views:',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• <strong>"(event) New Leads"</strong><br>Filter: lead_status = "New Lead" AND Company Approved? = "Yes"</li><li style="padding-left: 1.5rem;">• <strong>"(event) Existing Organizations"</strong><br>Filter: lead_status = "Existing Organization" AND Company Approved? = "Yes"</li></ul>',
+                    '',
+                    '<p class="section-header">PART 2: Export to Google Sheets</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Export or copy data from each CEP view</li><li>Paste into corresponding Google Sheet MASTER tab</li></ol>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• New Leads → <a href="https://docs.google.com/spreadsheets/d/14TZLr_lLQ3Dn1mSrinhbdKAkSuxu6z4T063XL9TKK74/edit?gid=0#gid=0" target="_blank">Deal Review & Assignment - New Leads</a></li><li style="padding-left: 1.5rem;">• Existing Organizations → <a href="https://docs.google.com/spreadsheets/d/1zhfYkQn9ObzWdrjrS2nVxRX3nT36NGqLd3Sw6AgcW5Q/edit?gid=0#gid=0" target="_blank">Deal Review & Assignment - Existing Leads</a></li></ul>',
+                    '<ol start="3" style="margin-top: 0.5rem;"><li>Data goes to <strong>"MASTER"</strong> tab in each sheet</li></ol>',
+                    '',
+                    '<p class="section-header">PART 3: Run "Refresh Farmer tabs"</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>In Google Sheets, click menu: <strong>🔄 Deal Review → "Refresh Farmer Tabs"</strong></li><li>Script automatically distributes leads to Hunter tabs</li></ol>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• Max Richter</li><li style="padding-left: 1.5rem;">• Constantin Ruhe</li><li style="padding-left: 1.5rem;">• Matthias Strach</li><li style="padding-left: 1.5rem;">• Lina Adrian</li><li style="padding-left: 1.5rem;">• Dr. Friso Zimmermann</li><li style="padding-left: 1.5rem;">• Others (Flo reviews unassigned deals)</li></ul>',
+                    '<ol start="3" style="margin-top: 0.5rem;"><li>Each Hunter gets their own tab with leads filtered to them</li></ol>',
+                    '',
+                    '<p class="section-header">PART 4: Notify Hunters</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Send notification message to each Hunter</li><li>They review their tab and fill columns</li></ol>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;"><strong>For NEW LEADS:</strong></li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 3rem;"><li style="padding-left: 1.5rem;">• Column L: <strong>Review Status</strong><br>(Approved for Contact / Needs Review / Do Not Contact)</li><li style="padding-left: 1.5rem;">• Column M: <strong>Notes from Deal Owner</strong></li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;"><strong>For EXISTING LEADS:</strong></li></ul>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 3rem;"><li style="padding-left: 1.5rem;">• Column P: <strong>Status from Deal Owner</strong></li><li style="padding-left: 1.5rem;">• Column Q: <strong>Notes from Deal Owner</strong></li><li style="padding-left: 1.5rem;">• Column R: <strong>Assigned to</strong> (Hunter name)</li></ul>',
+                    '<ol start="3" style="margin-top: 0.5rem;"><li>Wait for all Hunters to complete their reviews</li></ol>',
+                    '',
+                    '<p class="section-header">PART 5: Update CEP</p>',
+                    '<ol style="margin-top: 0.5rem;"><li>Once Hunters complete reviews, <strong>MANUALLY</strong> copy-paste from Google Sheets → CEP:</li></ol>',
+                    '<ul style="list-style: none; padding-left: 0; margin-left: 2rem;"><li style="padding-left: 1.5rem;">• <strong>CRM+ Status Approved</strong><br>(Yes / No / Needs Review)</li><li style="padding-left: 1.5rem;">• <strong>CRM+ assigned to</strong><br>(Hunter name)</li></ul>',
+                    '<ol start="2" style="margin-top: 0.5rem;"><li>These fields control note generation in next step</li></ol>'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Approved for Contact → Can proceed to note generation'},
+                    {icon: '⚠️', text: 'Needs Review → Review before deciding'},
+                    {icon: '❌', text: 'Do Not Contact → Stop here, no note created'},
+                    {icon: '💡', text: 'This is a ONE-TIME process per event - not per batch'}
+                ],
+                tips: 'This collaborative review prevents wasted outreach effort. Hunters know their territories and can identify which companies should/shouldn\'t be contacted. Complete this BEFORE generating any notes.',
+                tech: {
+                    script: 'Google Sheets Script: "Refresh Farmer tabs"',
+                    notes: 'Script uses composite key (Deal Link + Source) to match deals. Distributes to tabs based on Deal Owner field. "Others" tab catches deals with empty or non-main-farmer owners. Auto-syncs edits back to MASTER tab. Color codes Status (Green=Approved+Assigned, Yellow=Needs Review/Awaiting, Red=Do Not Contact) and Assigned To (per-person pastel colors).'
+                }
+            },
+            
+            'can-contact': {
+                title: 'DECISION: Can Contact?',
+                summary: 'Check CRM+ Status Approved before proceeding to note generation',
+                isDecision: true,
+                decisionContent: `
+                    <ul>
+                        <li><strong>✅ YES (CRM+ Status = "Yes"):</strong> Proceed to Generate CRM Note</li>
+                        <li><strong>❌ NO (CRM+ Status = "No"):</strong> Do NOT create note - workflow ends here</li>
+                        <li><strong>⚠️ NEEDS REVIEW:</strong> Resolve status before proceeding</li>
+                    </ul>
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: var(--yellow-light); border-radius: 8px;">
+                        <strong>💡 Note Generation Filter:</strong><br>
+                        The Generate CRM Note script (next step) has a filter option for CRM+ Status Approved. You can choose to generate notes only for "Yes" status, or include other statuses as needed.
+                    </div>
+                `
+            },
+            
+            // CONVERGENCE
+            'track-convergence': {
+                title: '🟪 FINAL OUTPUT',
+                summary: 'After CRM Check+ approval, generate formatted CRM notes and notify team for Pipedrive upload',
+                system: [
+                    '<strong>Prerequisites:</strong> Both Company and Employee tracks complete + CRM Check+ approved',
+                    '<strong>Tables involved:</strong> Company Enrichment Pipeline + Lead Enrichment Pipeline → Note to Pipedrive',
+                    '<strong>Input:</strong> Approved companies (CEP with CRM+ Status = "Yes") + Validated employees (LEP)',
+                    '<strong>Process:</strong> Generate formatted note → Notify Simon for upload',
+                    '<strong>Output:</strong> CRM-ready notes with company info + decision-makers',
+                    '<strong>Key feature:</strong> Immutable history - only adds NEW info, never duplicates'
+                ],
+                actions: [
+                    'Ensure both Company and Employee tracks are complete',
+                    'Complete CRM Check+ review and assignment (Step 14)',
+                    'Generate notes with Universal script (3 operating modes)',
+                    'Filter by CRM+ Status Approved as needed',
+                    'Review generated notes for accuracy',
+                    'Notify Simon for manual Pipedrive upload'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Only includes validated employees (Lead Final Status = "🟢 Validated")'},
+                    {icon: '✅', text: 'Only includes approved companies (CRM+ Status Approved = "Yes")'},
+                    {icon: '💡', text: 'Update Note prevents duplication - safe to regenerate'},
+                    {icon: '📬', text: 'Workflow ends with notification to Simon - not automatic sync'}
+                ],
+                tips: 'The Update Note feature is intelligent - you can regenerate notes multiple times and it only adds truly NEW information. Complete CRM Check+ BEFORE generating notes to ensure strategic alignment.',
+                tech: null
+            },
+            
+            'note-gen': {
+                title: 'STEP 15: Generate CRM Note',
+                summary: 'Most complex script: 3 operating modes, multiple content blocks, immutable update history',
+                system: [
+                    '<strong>MODE 1 - By Source:</strong> Notes for one fair/event (includes Fair Block + Writable Fields)',
+                    '<strong>MODE 2 - By View:</strong> Notes for any CEP view (uses Record ID Set)',
+                    '<strong>MODE 3 - Multi-Source:</strong> 1 note per company with Fair Blocks for EACH fair',
+                    '<strong>Content blocks:</strong> Fair Block (🎟️), Writable Fair Block (✏️), Website Block (🌐), Employee Block (👥)',
+                    '<strong>Update Note Logic:</strong> Immutable history - only appends NEW info, never duplicates Fair Blocks or employees'
+                ],
+                actions: [
+                    'Go to "Note to Pipedrive" table',
+                    'Run <strong>"Generate Note (Universal)"</strong> script',
+                    '',
+                    '<p class="section-header">Choose mode:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Single fair → Mode 1 (By Source)</li><li style="padding-left: 1.5rem;">• Filtered view → Mode 2 (By View)</li><li style="padding-left: 1.5rem;">• Multiple fairs → Mode 3 (Multi-Source)</li></ul>',
+                    '',
+                    '<p class="section-header">Configure filters:</p>',
+                    '<ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;"><li style="padding-left: 1.5rem;">• Company Approved? (require "Yes" OR ignore)</li><li style="padding-left: 1.5rem;">• CRM+ Status Approved (multi-select filter)</li><li style="padding-left: 1.5rem;">• Lead Final Status (require "🟢 Validated" OR ignore)</li></ul>',
+                    '',
+                    'Review preview of notes generated',
+                    'Click <strong>"Accept"</strong>',
+                    'Verify notes with formatted content'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'Only validated employees included (🟢 Validated)'},
+                    {icon: '✅', text: 'Only approved companies included (if filter enabled)'},
+                    {icon: '💡', text: 'Multi-Source mode: 1 note per company with ALL fair blocks'},
+                    {icon: '⚠️', text: 'Update Note NEVER duplicates existing Fair Blocks'}
+                ],
+                tips: 'Regenerating notes is SAFE. The Update Note only adds truly NEW information (new employees, new fairs). Previous content stays immutable.',
+                tech: {
+                    script: 'Script: "Note to Pipedrive (Universal)"',
+                    notes: '3 modes: By Source / By View / Multi-Source. Fair Block tracking per source prevents duplication. Immutable Update Note: append-only, timestamp per entry. Template engine with configurable blocks.',
+                    examples: `
+                        <div style="margin-top: 1.5rem;">
+                            <button class="tech-btn" onclick="toggleTech(this)" style="margin-bottom: 0;">
+                                <span>📋 View Note Examples (Single Source vs Multiple Source)</span>
+                                <span>▼</span>
+                            </button>
+                            <div class="tech-details">
+                                <div class="tech-content">
+                                    <h4 style="color: var(--purple); margin-bottom: 1rem;">SINGLE SOURCE MODE - Example Output:</h4>
+                                    <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 5px solid var(--yellow); margin-bottom: 2rem; font-size: 0.9rem; line-height: 1.7; font-family: 'Inter', sans-serif;">
+                                        <div style="margin-bottom: 1rem;"><strong>🎟️ E-World 2026</strong></div>
+                                        
+                                        <div style="margin-bottom: 1rem;"><strong>👥 Teilnehmer</strong><br>
+                                        📌 Axel Popp / Leiter Wärmenetze<br>
+                                        📣 Role at fair: E-world Previous Editions Visitor<br>
+                                        📞 Persönlicher Kontaktdaten<br>
+                                        ☎️ Telefon: +491627184042<br>
+                                        📧 Email: axel.popp@engie.com</div>
+                                        
+                                        <div style="margin-bottom: 1rem;"><strong>🎯 Kategorie:</strong> Property Manager</div>
+                                        
+                                        <div style="margin-bottom: 1rem;"><strong>🏢 Unternehmenssteckbrief</strong><br>
+                                        📍 Sitz & Tätigkeit: Sitz in Köln, Nordrhein-Westfalen, tätig in Deutschlandweit<br>
+                                        🏗️ Gründung: n/a<br>
+                                        👥 Mitarbeitende: ~1.300<br>
+                                        📌 Geschäftsmodell: Engie Deutschland betreut und optimiert Immobilienportfolios in ganz Deutschland...<br>
+                                        🏘️ Größe: ~1.300 Mitarbeiter (LinkedIn, 2024)<br>
+                                        ⭐ Referenzprojekt: 2025: CO2-freie Wärmeversorgung für Quartier Das Neue Gartenfeld, Berlin.<br>
+                                        🕒 Öffnungszeiten: n/a</div>
+                                        
+                                        <div style="margin-bottom: 1rem;"><strong>📞 Kontaktdaten</strong><br>
+                                        ☎️ Telefon: +49 221 46905438<br>
+                                        📧 Email: info-deutschland@engie.com<br>
+                                        🌐 Website: engie-deutschland.de</div>
+                                        
+                                        <div><strong>👤 Ansprechpartner</strong><br>
+                                        👔 CEO: Eric Stab – Vorsitzender Geschäftsführer / CEO<br>
+                                        👔 Andere Kontakte: Olaf Beyer – Leiter Immobilienwirtschaft</div>
+                                    </div>
+                                    
+                                    <h4 style="color: var(--purple); margin-bottom: 1rem; margin-top: 2rem;">MULTI-SOURCE MODE - Example Output:</h4>
+                                    <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 5px solid var(--purple); font-size: 0.9rem; line-height: 1.7; font-family: 'Inter', sans-serif;">
+                                        <div style="margin-bottom: 1.5rem;"><strong>🎟️ Immobilienforum München 2026</strong><br>
+                                        ➕ Startdatum: 22/1/2026<br>
+                                        ➕ Ort: München<br>
+                                        ➕ Messe-URL: https://www.managementcircle.de/...<br><br>
+                                        <strong>👥 Teilnehmer</strong><br>
+                                        📌 Katrin Hupfauer / Head of Real Estate Transactions<br>
+                                        📣 Role at fair: Expert<br>
+                                        📧 Email: katrin@mea.gov.in</div>
+                                        
+                                        <div style="margin-bottom: 1.5rem; padding-top: 1rem; border-top: 2px dashed #e5e7eb;"><strong>🎟️ Real Estate-Forecast 2026</strong><br>
+                                        ➕ Startdatum: 4/2/2026<br>
+                                        ➕ Enddatum: 5/2/2026<br>
+                                        ➕ Ort: Frankfurt<br>
+                                        ➕ Messe-URL: www.Forecast2026.de<br><br>
+                                        <strong>👥 Teilnehmer</strong><br>
+                                        Keine validierten Mitarbeiter für diese Messe</div>
+                                        
+                                        <div style="margin-bottom: 1rem; padding-top: 1rem; border-top: 2px solid #8b5cf6;"><strong>🎯 Kategorie:</strong> Fund Manager</div>
+                                        
+                                        <div style="margin-bottom: 1rem;"><strong>🏢 Unternehmenssteckbrief</strong><br>
+                                        📍 Sitz & Tätigkeit: Sitz in München, Bayern, tätig in Deutschlandweit, Europa, Asien<br>
+                                        👥 Mitarbeitende: n/a<br>
+                                        📌 Geschäftsmodell: Manages diverse real estate portfolios...<br>
+                                        🏘️ Größe: 15 Mrd. EUR Immobilienportfolio (2024)</div>
+                                        
+                                        <div style="margin-bottom: 1rem;"><strong>📞 Kontaktdaten</strong><br>
+                                        ☎️ Telefon: +49 89 24 89 - 0<br>
+                                        📧 Email: info@meag.com<br>
+                                        🌐 Website: meag.de</div>
+                                        
+                                        <div><strong>👤 Ansprechpartner</strong><br>
+                                        👔 CEO: Antonia Jobke – Chief Investment Officer</div>
+                                    </div>
+                                    
+                                    <div style="margin-top: 1.5rem; padding: 1rem; background: var(--yellow-light); border-radius: 8px;">
+                                        <strong>💡 Key Difference:</strong><br>
+                                        Single Source = One fair block at top<br>
+                                        Multi-Source = Multiple fair blocks, one per event, separated by dividers
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            },
+            
+            'notify-team': {
+                title: 'STEP 16: Notify Team',
+                summary: 'Final step: Send notes to Simon for manual Pipedrive upload - workflow complete',
+                system: [
+                    '<strong>Manual upload process:</strong> Notes are NOT automatically synced via API',
+                    '<strong>Team member:</strong> Simon handles Pipedrive upload',
+                    '<strong>Your responsibility:</strong> Verify notes are complete and notify team',
+                    '<strong>Workflow ends here:</strong> This is the final step - your work is complete'
+                ],
+                actions: [
+                    'After generating notes in Airtable, verify completeness:',
+                    '   <ul><li>All approved companies have notes</li><li>Notes contain all required sections (Fair Block, Employees, Company Info)</li><li>No formatting errors</li></ul>',
+                    'Prepare notification for Simon with:',
+                    '   <ul><li><strong>Event name(s):</strong> Which fair/event these notes are for</li><li><strong>Number of notes:</strong> Total count created</li><li><strong>Location:</strong> Airtable table "Note to Pipedrive"</li><li><strong>View filter:</strong> If specific view, mention it</li></ul>',
+                    'Send notification to Simon',
+                    'Simon uploads notes to Pipedrive manually',
+                    '<strong>Done!</strong> Workflow complete - await confirmation from Simon'
+                ],
+                criteria: [
+                    {icon: '✅', text: 'All notes verified and complete before notifying'},
+                    {icon: '📬', text: 'Clear communication with Simon on event name and note count'},
+                    {icon: '💡', text: 'Your work ends here - Simon handles Pipedrive upload'},
+                    {icon: '⏱️', text: 'Allow time for Simon to complete upload'}
+                ],
+                tips: 'This manual step ensures quality control. Simon reviews notes before Pipedrive upload to catch any issues. Always verify your notes are complete before sending notification.',
+                tech: null
+            }
+        };
+        
+        function openGuide(stepId) {
+            const guide = guides[stepId];
+            if (!guide) {
+                document.getElementById('sidebarContent').innerHTML = `
+                    <div style="padding: 4rem 2rem; text-align: center; color: var(--gray);">
+                        <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;">⚠️</div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--black);">Guide In Progress</h3>
+                        <p>This section is being documented</p>
+                    </div>
+                `;
+                document.getElementById('sidebar').classList.add('open');
+                return;
+            }
+            
+            // Clear active
+            document.querySelectorAll('.step, .decision, .track-header').forEach(el => el.classList.remove('active'));
+            
+            // Set active
+            const stepEl = document.querySelector(`[data-step="${stepId}"]`);
+            if (stepEl) stepEl.classList.add('active');
+            
+            // Hide tooltip
+            document.getElementById('helpTooltip').classList.add('hidden');
+            
+            let html = `
+                <div class="guide-header">
+                    <h3>${guide.title}</h3>
+                    <p>${guide.summary}</p>
+                </div>
+            `;
+            
+            // Check if it's a decision (short format)
+            if (guide.isDecision) {
+                html += `
+                    <div class="guide-section">
+                        <div class="guide-section-title">👉 DECISION GUIDE</div>
+                        <div class="guide-box">
+                            ${guide.decisionContent}
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Full step format
+                if (guide.system) {
+                    html += `
+                        <div class="guide-section">
+                            <div class="guide-section-title">⚙️ WHAT THE SYSTEM DOES</div>
+                            <div class="guide-box">
+                                <ul>
+                                    ${guide.system.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (guide.actions) {
+                    let actionsHTML = '';
+                    guide.actions.forEach(item => {
+                        if (!item || item === '') {
+                            // Skip empty items
+                            return;
+                        }
+                        // Check if item contains HTML tags (section headers or custom HTML)
+                        if (item.includes('<p') || item.includes('<ol') || item.includes('<ul')) {
+                            // Render raw HTML
+                            actionsHTML += item;
+                        } else {
+                            // Regular numbered list item
+                            actionsHTML += `<li>${item}</li>`;
+                        }
+                    });
+                    
+                    html += `
+                        <div class="guide-section">
+                            <div class="guide-section-title">👉 YOUR ACTION</div>
+                            <div class="guide-box">
+                                <ol>
+                                    ${actionsHTML}
+                                </ol>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (guide.criteria) {
+                    let criteriaHTML = '';
+                    guide.criteria.forEach(c => {
+                        criteriaHTML += `
+                            <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem; line-height: 1.6;">
+                                <div style="font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem;">${c.icon}</div>
+                                <div>${c.text}</div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `
+                        <div class="guide-section">
+                            <div class="guide-section-title">📊 DECISION CRITERIA</div>
+                            <div class="guide-box">
+                                ${criteriaHTML}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (guide.tips) {
+                    html += `
+                        <div class="guide-section">
+                            <div class="guide-section-title">💡 TIP</div>
+                            <div class="tip-box">
+                                ${guide.tips}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (guide.tech) {
+                    html += `
+                        <div class="tech-toggle">
+                            <button class="tech-btn" onclick="toggleTech(this)">
+                                <span>📖 View Technical Details</span>
+                                <span>▼</span>
+                            </button>
+                            <div class="tech-details">
+                                <div class="tech-content">
+                                    <h4>Script Used:</h4>
+                                    <div class="code">${guide.tech.script}</div>
+                                    <h4 style="margin-top: 1.5rem;">Technical Notes:</h4>
+                                    <p style="color: var(--gray); line-height: 1.7; margin-top: 0.5rem;">${guide.tech.notes}</p>
+                                    ${guide.tech.examples ? guide.tech.examples : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            document.getElementById('sidebarContent').innerHTML = html;
+            document.getElementById('sidebar').classList.add('open');
+        }
+        
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.querySelectorAll('.step, .decision, .track-header').forEach(el => el.classList.remove('active'));
+        }
+        
+        function toggleTech(btn) {
+            const details = btn.nextElementSibling;
+            details.classList.toggle('open');
+            btn.querySelector('span:last-child').textContent = details.classList.contains('open') ? '▲' : '▼';
+        }
+    </script>
+</body>
+</html>
